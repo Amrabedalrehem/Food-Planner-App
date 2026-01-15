@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Food Planner</string>
+
+    <!-- Auth Screens -->
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="login_subtitle">Login to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="or">OR</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_as_guest">Continue as Guest</string>
+    <string name="dont_have_account">Don\'t have an account? Sign Up</string>
+    <string name="already_have_account">Already have an account? Login</string>
+
+    <!-- Home Screen -->
+    <string name="meal_of_day">Meal of the Day</string>
+    <string name="categories">Categories</string>
+    <string name="countries">Countries</string>
+    <string name="search">Search</string>
+    <string name="favorites">Favorites</string>
+    <string name="meal_plan">Meal Plan</string>
+
+    <!-- Meal Details -->
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="add_to_plan">Add to Meal Plan</string>
+
+    <!-- Messages -->
+    <string name="no_internet">No Internet Connection</string>
+    <string name="loading">Loading...</string>
+    <string name="error_occurred">An error occurred</string>
+</resources>

@@ -1,0 +1,32 @@
+<!-- res/values/colors.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors -->
+    <color name="primaryColor">#FF6B35</color>
+    <color name="primaryDarkColor">#E55A2B</color>
+    <color name="primaryLightColor">#FF8C61</color>
+
+    <!-- Accent Colors -->
+    <color name="accentColor">#4ECDC4</color>
+    <color name="secondaryColor">#FFE66D</color>
+
+    <!-- Background -->
+    <color name="backgroundColor">#F7F7F7</color>
+    <color name="cardBackground">#FFFFFF</color>
+
+    <!-- Text -->
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="textHint">#9E9E9E</color>
+
+    <!-- Status -->
+    <color name="successColor">#4CAF50</color>
+    <color name="errorColor">#F44336</color>
+    <color name="warningColor">#FF9800</color>
+
+    <!-- Basic -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+</resources>
