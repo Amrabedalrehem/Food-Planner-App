@@ -1,9 +1,7 @@
-<!-- res/values/colors.xml -->
-<?xml version="1.0" encoding="utf-8"?>
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary Colors -->
-    <color name="primaryColor">#FF6B35</color>
+    <color name="primaryColor">#FF6D00</color>
     <color name="primaryDarkColor">#E55A2B</color>
     <color name="primaryLightColor">#FF8C61</color>
 
