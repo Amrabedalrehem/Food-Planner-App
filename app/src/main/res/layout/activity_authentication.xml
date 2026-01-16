@@ -79,6 +79,7 @@
             android:background="@drawable/bg_social_button"
             android:src="@drawable/google"
             android:padding="16dp"
+            android:id="@+id/btnGoogle"
             android:scaleType="fitCenter"
             android:contentDescription="تسجيل بواسطة جوجل" />
 
