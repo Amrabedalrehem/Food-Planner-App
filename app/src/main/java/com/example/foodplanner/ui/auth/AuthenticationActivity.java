@@ -1,154 +1,108 @@
 package com.example.foodplanner.ui.auth;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.util.Log;
-import android.widget.ImageButton;
-import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.credentials.Credential;
-import androidx.credentials.CredentialManager;
-import androidx.credentials.CredentialManagerCallback;
-import androidx.credentials.CustomCredential;
-import androidx.credentials.GetCredentialRequest;
-import androidx.credentials.GetCredentialResponse;
-import androidx.credentials.exceptions.GetCredentialException;
-
+ import android.os.Bundle;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
 import com.example.foodplanner.R;
-// استبدل HomeActivity باسم النشاط الرئيسي في تطبيقك
-// import com.example.foodplanner.ui.home.HomeActivity;
-
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-
-import java.util.concurrent.Executor;
-
-public class AuthenticationActivity extends AppCompatActivity {
-
-    private static final String TAG = "GoogleAuth";
-    private FirebaseAuth mAuth;
-    private CredentialManager credentialManager;
+ import org.w3c.dom.Text;
+public class AuthenticationActivity extends AppCompatActivity implements AuthContract.View {
+    TextView textTitle;
+    TextView textSubTitle;
+    private AuthContract.Presenter presenter;
+    private androidx.credentials.CredentialManager credentialManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_authentication);
+         setContentView(R.layout.activity_authentication);
+            if(savedInstanceState == null)
+            {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView, new SignInFragment())
+                        .commit();
+            }
+         presenter = new AuthPresenter(this);
+         credentialManager = androidx.credentials.CredentialManager.create(this);
+         findViewById(R.id.btnGoogle).setOnClickListener(v -> startGoogleSignIn());
+         findViewById(R.id.btnGuest).setOnClickListener(v -> navigateToHome());
+         textTitle = findViewById(R.id.textTitle);
+         textSubTitle = findViewById(R.id.textSubTitle);
 
-        mAuth = FirebaseAuth.getInstance();
-        credentialManager = CredentialManager.create(this);
 
-         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            navigateToHome();
-            return;
-        }
-
-        ImageButton btnGoogle = findViewById(R.id.btnGoogle);
-        btnGoogle.setOnClickListener(v -> startGoogleSignIn());
-
-        findViewById(R.id.btnGuest).setOnClickListener(v -> {
-            navigateToHome();
-        });
     }
 
     private void startGoogleSignIn() {
-        GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
-                .setFilterByAuthorizedAccounts(false)
-                .setServerClientId(getString(R.string.default_web_client_id))
-                .setAutoSelectEnabled(true)
-                .build();
-
-        GetCredentialRequest request = new GetCredentialRequest.Builder()
-                .addCredentialOption(googleIdOption)
-                .build();
-
-        CancellationSignal cancellationSignal = new CancellationSignal();
-
-        credentialManager.getCredentialAsync(
-                this,
-                request,
-                cancellationSignal,
-                getMainExecutor(),
-                new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+        com.google.android.libraries.identity.googleid.GetGoogleIdOption googleIdOption =
+                new com.google.android.libraries.identity.googleid.GetGoogleIdOption.Builder()
+                        .setFilterByAuthorizedAccounts(false)
+                        .setServerClientId(getString(R.string.default_web_client_id))
+                        .build();
+        androidx.credentials.GetCredentialRequest request =
+                new androidx.credentials.GetCredentialRequest.Builder()
+                        .addCredentialOption(googleIdOption)
+                        .build();
+        credentialManager.getCredentialAsync(this, request, new android.os.CancellationSignal(),
+                java.util.concurrent.Executors.newSingleThreadExecutor(),
+                new androidx.credentials.CredentialManagerCallback<androidx.credentials.GetCredentialResponse, androidx.credentials.exceptions.GetCredentialException>() {
                     @Override
-                    public void onResult(GetCredentialResponse response) {
-                        handleSignIn(response);
+                    public void onResult(androidx.credentials.GetCredentialResponse response) {
+                        handleSignIn(response.getCredential());
                     }
-
                     @Override
-                    public void onError(@NonNull GetCredentialException e) {
-                        Log.e(TAG, "Error getting credential: " + e.getMessage(), e);
-                        Toast.makeText(AuthenticationActivity.this,
-                                "فشل تسجيل الدخول: " + e.getMessage(),
-                                Toast.LENGTH_SHORT).show();
+                    public void onError(@NonNull androidx.credentials.exceptions.GetCredentialException e) {
+                        showError("Google Error: " + e.getMessage());
                     }
                 });
     }
 
-    private void handleSignIn(GetCredentialResponse response) {
-        Credential credential = response.getCredential();
-
-        if (credential instanceof CustomCredential) {
-            if (GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL.equals(credential.getType())) {
-                try {
-                    GoogleIdTokenCredential googleIdTokenCredential =
-                            GoogleIdTokenCredential.createFrom(((CustomCredential) credential).getData());
-
-                    String idToken = googleIdTokenCredential.getIdToken();
-                    firebaseAuthWithGoogle(idToken);
-                } catch (Exception e) {
-                    Log.e(TAG, "Error parsing Google ID token", e);
-                    Toast.makeText(this, "فشل معالجة بيانات Google", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Log.e(TAG, "Unexpected credential type: " + credential.getType());
+    private void handleSignIn(androidx.credentials.Credential credential) {
+        if (credential instanceof androidx.credentials.CustomCredential &&
+                credential.getType().equals(com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
+            try {
+                com.google.android.libraries.identity.googleid.GoogleIdTokenCredential tokenCredential =
+                        com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.createFrom(credential.getData());
+                runOnUiThread(() -> presenter.loginWithGoogle(tokenCredential.getIdToken()));
+            } catch (Exception e) {
+                showError("Token Error");
             }
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "signInWithCredential:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-
-                        String welcomeMessage = "مرحباً ";
-                        if (user != null && user.getDisplayName() != null) {
-                            welcomeMessage += user.getDisplayName();
-                        }
-
-                        Toast.makeText(AuthenticationActivity.this,
-                                welcomeMessage,
-                                Toast.LENGTH_SHORT).show();
-
-                        navigateToHome();
-                    } else {
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        Toast.makeText(AuthenticationActivity.this,
-                                "فشل المصادقة مع Firebase",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+    @Override
+    public void showWelcomeMessage(String name) {
+        runOnUiThread(() -> Toast.makeText(this, "Welcome " + name, Toast.LENGTH_SHORT).show());
     }
 
-    private void navigateToHome() {
-        // قم بإلغاء التعليق وتعديل اسم الـ Activity
-        // Intent intent = new Intent(AuthenticationActivity.this, HomeActivity.class);
-        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        // startActivity(intent);
-        // finish();
+    @Override
+    public void showError(String message) {
+        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+    }
 
-        Toast.makeText(this, "سيتم الانتقال للصفحة الرئيسية", Toast.LENGTH_SHORT).show();
+    @Override
+    public void navigateToHome() {
+        runOnUiThread(() -> {
+            Toast.makeText(this, "Redirecting to Home...", Toast.LENGTH_SHORT).show();
+            // Intent intent = new Intent(this, HomeActivity.class);
+            // startActivity(intent);
+            // finish();
+        });
+    }
+
+    @Override
+    public void openSignUp() {
+     getSupportFragmentManager()
+             .beginTransaction()
+             .replace(R.id.fragmentContainerView,new SignupFragment())
+             .addToBackStack(null).commit();
+     textSubTitle.setText("Sign up to start planning meals");
+     textTitle.setText("Create Account");
+     }
+
+    @Override
+    public void openSignIn() {
+    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,new SignInFragment()).commit();
+        textTitle.setText("Welcome Back");
+        textSubTitle.setText("Sign in to continue");
     }
 }
