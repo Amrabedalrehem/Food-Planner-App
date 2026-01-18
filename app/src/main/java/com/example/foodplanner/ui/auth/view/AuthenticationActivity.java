@@ -1,11 +1,13 @@
-package com.example.foodplanner.ui.auth;
+package com.example.foodplanner.ui.auth.view;
  import android.os.Bundle;
  import android.widget.TextView;
  import android.widget.Toast;
  import androidx.annotation.NonNull;
  import androidx.appcompat.app.AppCompatActivity;
 import com.example.foodplanner.R;
- import org.w3c.dom.Text;
+ import com.example.foodplanner.ui.auth.presenter.AuthContract;
+ import com.example.foodplanner.ui.auth.presenter.AuthPresenter;
+
 public class AuthenticationActivity extends AppCompatActivity implements AuthContract.View {
     TextView textTitle;
     TextView textSubTitle;

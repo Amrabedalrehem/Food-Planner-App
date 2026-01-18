@@ -1,4 +1,4 @@
-package com.example.foodplanner.ui.auth;
+package com.example.foodplanner.ui.auth.presenter;
 
 public interface AuthContract {
      interface View {

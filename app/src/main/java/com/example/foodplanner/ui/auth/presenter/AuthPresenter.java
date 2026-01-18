@@ -1,17 +1,7 @@
-package com.example.foodplanner.ui.auth;
+package com.example.foodplanner.ui.auth.presenter;
 
-import static android.widget.Toast.*;
-
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.example.foodplanner.MainActivity;
-import com.example.foodplanner.repository.auth.AuthRepository;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.foodplanner.data.repository.auth.AuthRepository;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;

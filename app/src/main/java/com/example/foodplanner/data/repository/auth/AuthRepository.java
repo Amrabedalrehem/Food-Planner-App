@@ -1,4 +1,4 @@
-package com.example.foodplanner.repository.auth;
+package com.example.foodplanner.data.repository.auth;
 
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
