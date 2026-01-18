@@ -38,11 +38,12 @@
                 app:boxCornerRadiusBottomEnd="21dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/idFullnameSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Full Name"
                     android:inputType="textPersonName"
-                    android:padding="12dp"/>
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -60,11 +61,12 @@
                 app:boxCornerRadiusBottomEnd="21dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/idEmailSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:padding="12dp"/>
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -83,16 +85,18 @@
                 app:boxCornerRadiusBottomEnd="21dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/idPasswordSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:padding="12dp"/>
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:id="@+id/btnSwitchSignIn"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#F95200"
                 android:text="Sign Up"

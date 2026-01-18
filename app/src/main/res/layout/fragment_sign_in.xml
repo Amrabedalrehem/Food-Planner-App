@@ -5,7 +5,7 @@
     android:id="@+id/idSignIn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.SignInFragment">
+    tools:context=".ui.auth.view.SignInFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
@@ -38,11 +38,12 @@
                 app:boxCornerRadiusBottomEnd="21dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signInemail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:padding="12dp"/>
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -59,17 +60,18 @@
                 app:boxCornerRadiusTopEnd="21dp"
                 app:boxCornerRadiusBottomStart="21dp"
                 app:boxCornerRadiusBottomEnd="21dp">
-
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signInpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:padding="12dp"/>
+                    android:padding="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:layout_width="match_parent"
+                android:id="@+id/btnSwitchSignUp"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#F95200"
