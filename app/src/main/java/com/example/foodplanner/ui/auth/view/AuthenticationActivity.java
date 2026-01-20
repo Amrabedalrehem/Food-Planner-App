@@ -1,67 +1,109 @@
-package com.example.foodplanner.data.datasource.network.auth;
+package com.example.foodplanner.ui.auth.view;
+ import android.os.Bundle;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+import com.example.foodplanner.R;
+ import com.example.foodplanner.ui.auth.presenter.AuthContract;
+ import com.example.foodplanner.ui.auth.presenter.AuthPresenter;
+ import com.example.foodplanner.data.repository.auth.AuthRepository;
 
-import android.content.Context;
-import androidx.annotation.NonNull;
+ 
 
-public class FirebaseAuthHelper {
+public class AuthenticationActivity extends AppCompatActivity implements AuthContract.View {
 
-    private Context context;
-    private androidx.credentials.CredentialManager credentialManager;
+    private TextView textTitle, textSubTitle;
+    private AuthContract.Presenter presenter;
 
-    public FirebaseAuthHelper(Context context) {
-        this.context = context;
-        this.credentialManager = androidx.credentials.CredentialManager.create(context);
-    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_authentication);
 
-    public interface GoogleSignInCallback {
-        void onSuccess(String idToken);
-        void onError(String message);
-    }
+        textTitle = findViewById(R.id.textTitle);
+        textSubTitle = findViewById(R.id.textSubTitle);
 
-    public void startGoogleSignIn(String webClientId, GoogleSignInCallback callback) {
-        com.google.android.libraries.identity.googleid.GetGoogleIdOption googleIdOption =
-                new com.google.android.libraries.identity.googleid.GetGoogleIdOption.Builder()
-                        .setFilterByAuthorizedAccounts(false)
-                        .setServerClientId(webClientId)
-                        .build();
+         presenter = new AuthPresenter(this, new AuthRepository(this));
 
-        androidx.credentials.GetCredentialRequest request =
-                new androidx.credentials.GetCredentialRequest.Builder()
-                        .addCredentialOption(googleIdOption)
-                        .build();
-
-        if (context instanceof android.app.Activity) {
-            credentialManager.getCredentialAsync(
-                    (android.app.Activity) context,
-                    request,
-                    new android.os.CancellationSignal(),
-                    java.util.concurrent.Executors.newSingleThreadExecutor(),
-                    new androidx.credentials.CredentialManagerCallback<androidx.credentials.GetCredentialResponse, androidx.credentials.exceptions.GetCredentialException>() {
-                        @Override
-                        public void onResult(androidx.credentials.GetCredentialResponse response) {
-                            handleGoogleResponse(response.getCredential(), callback);
-                        }
-
-                        @Override
-                        public void onError(@NonNull androidx.credentials.exceptions.GetCredentialException e) {
-                            callback.onError("Google Error: " + e.getMessage());
-                        }
-                    });
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new SignInFragment())
+                .commit();
         }
+
+        findViewById(R.id.btnGoogle).setOnClickListener(v ->
+                presenter.signInWithGoogle(this, getString(R.string.default_web_client_id))
+        );
+
+        findViewById(R.id.btnGuest).setOnClickListener(v -> navigateToHome());
     }
 
-    private void handleGoogleResponse(androidx.credentials.Credential credential, GoogleSignInCallback callback) {
-        if (credential instanceof androidx.credentials.CustomCredential &&
-                credential.getType().equals(com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
-            try {
-                com.google.android.libraries.identity.googleid.GoogleIdTokenCredential tokenCredential =
-                        com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.createFrom(credential.getData());
-                callback.onSuccess(tokenCredential.getIdToken());
-            } catch (Exception e) {
-                callback.onError("Token Error: " + e.getMessage());
-            }
-        } else {
-            callback.onError("Invalid credential type");
+    @Override
+    public void showWelcomeMessage(String name) {
+        Toast.makeText(this, "Hello " + name, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void navigateToHome() {
+        Toast.makeText(this, "Go to Home", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void openSignUp() {
+        if(textTitle != null && textSubTitle != null) {
+            textTitle.setText("Create Account");
+            textSubTitle.setText("Sign up to start planning meals");
         }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new SignupFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openSignIn() {
+        if(textTitle != null && textSubTitle != null) {
+            textTitle.setText("Welcome Back");
+            textSubTitle.setText("Sign in to continue");
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new SignInFragment())
+                .commit();
+    }
+
+
+    @Override
+    public void showLoading() {
+        // Optional: show progress bar
+    }
+
+    @Override
+    public void hideLoading() {
+        // Optional: hide progress bar
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.detachView();
+        super.onDestroy();
+    }
+
+     public void onLoginClicked(String email, String password) {
+        presenter.loginWithEmailAndPassword(email, password);
+    }
+
+    public void onRegisterClicked(String email, String password) {
+        presenter.registerWithEmailAndPassword(email, password);
+    }
+
+    public AuthContract.Presenter getPresenter() {
+        return presenter;
     }
 }

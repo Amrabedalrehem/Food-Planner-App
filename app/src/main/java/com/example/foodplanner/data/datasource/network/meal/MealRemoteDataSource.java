@@ -1,4 +1,4 @@
-package com.example.foodplanner.data.datasource.network;
+package com.example.foodplanner.data.datasource.network.meal;
 
 import com.example.foodplanner.data.models.Meal;
 import com.example.foodplanner.network.MealResponse;
@@ -36,6 +36,7 @@ public class  MealRemoteDataSource {
 
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {
+                callback.onError(t.getMessage());
 
             }}
 );

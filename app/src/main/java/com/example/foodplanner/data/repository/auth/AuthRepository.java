@@ -1,25 +1,40 @@
 package com.example.foodplanner.data.repository.auth;
+import android.app.Activity;
+import android.content.Context;
 
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.foodplanner.data.datasource.network.auth.FirebaseAuthHelper;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthRepository {
+    FirebaseAuthHelper firebaseAuthHelper;
+     public AuthRepository(Context context) {
+        firebaseAuthHelper = FirebaseAuthHelper.getInstance(context);
+        }
 
-    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    public interface Callback {
-        void onSuccess(FirebaseUser user);
-        void onError(String message);
+    public void signInWithGoogle(Activity activity, String webClientId, AuthCallback callback) {
+        firebaseAuthHelper.startGoogleSignIn(activity,webClientId, callback);
     }
-    public void loginWithGoogle(AuthCredential credential, Callback callback) {
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        callback.onSuccess(firebaseAuth.getCurrentUser());
-                    } else {
-                        callback.onError("Firebase Auth Failed");
-                    }
-                });
+
+    public  void  registerWithEmail(String email, String password, AuthCallback callback)
+    {
+        firebaseAuthHelper.registerWithEmail(email,password,callback);
     }
+
+ public  void  loginWithEmail(String email, String password, AuthCallback callback)
+ {
+     firebaseAuthHelper.loginWithEmail(email,password,callback);
+ }
+
+ public  FirebaseUser  getCurrentUser()
+ {
+     return firebaseAuthHelper.getCurrentUser();
+ }
+
+ public  void signOut()
+ {
+     firebaseAuthHelper.signOut();
+ }
+
+
 }
