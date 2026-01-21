@@ -1,18 +1,23 @@
 package com.example.foodplanner.ui.auth.presenter;
 
+import android.app.Activity;
+
 public interface AuthContract {
-     interface View {
+
+    interface View {
         void showWelcomeMessage(String name);
         void showError(String message);
         void navigateToHome();
-          void openSignUp();
-         void openSignIn();
-     }
+        void openSignUp();
+        void openSignIn();
+        void showLoading();
+        void hideLoading();
+    }
+
     interface Presenter {
-        void loginWithGoogle(String idToken);
-        void registerWithEmailAndPassword(String email,String password);
+        void signInWithGoogle(Activity activity, String webClientId);
+        void registerWithEmailAndPassword(String email, String password);
         void loginWithEmailAndPassword(String email, String password);
-      }
+        void detachView();
+    }
 }
-
-

@@ -7,104 +7,103 @@ package com.example.foodplanner.ui.auth.view;
 import com.example.foodplanner.R;
  import com.example.foodplanner.ui.auth.presenter.AuthContract;
  import com.example.foodplanner.ui.auth.presenter.AuthPresenter;
+ import com.example.foodplanner.data.repository.auth.AuthRepository;
+
+ 
 
 public class AuthenticationActivity extends AppCompatActivity implements AuthContract.View {
-    TextView textTitle;
-    TextView textSubTitle;
+
+    private TextView textTitle, textSubTitle;
     private AuthContract.Presenter presenter;
-    private androidx.credentials.CredentialManager credentialManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_authentication);
-            if(savedInstanceState == null)
-            {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentContainerView, new SignInFragment())
-                        .commit();
-            }
-         presenter = new AuthPresenter(this);
-         credentialManager = androidx.credentials.CredentialManager.create(this);
-         findViewById(R.id.btnGoogle).setOnClickListener(v -> startGoogleSignIn());
-         findViewById(R.id.btnGuest).setOnClickListener(v -> navigateToHome());
-         textTitle = findViewById(R.id.textTitle);
-         textSubTitle = findViewById(R.id.textSubTitle);
+        setContentView(R.layout.activity_authentication);
 
+        textTitle = findViewById(R.id.textTitle);
+        textSubTitle = findViewById(R.id.textSubTitle);
 
-    }
+         presenter = new AuthPresenter(this, new AuthRepository(this));
 
-    private void startGoogleSignIn() {
-        com.google.android.libraries.identity.googleid.GetGoogleIdOption googleIdOption =
-                new com.google.android.libraries.identity.googleid.GetGoogleIdOption.Builder()
-                        .setFilterByAuthorizedAccounts(false)
-                        .setServerClientId(getString(R.string.default_web_client_id))
-                        .build();
-        androidx.credentials.GetCredentialRequest request =
-                new androidx.credentials.GetCredentialRequest.Builder()
-                        .addCredentialOption(googleIdOption)
-                        .build();
-        credentialManager.getCredentialAsync(this, request, new android.os.CancellationSignal(),
-                java.util.concurrent.Executors.newSingleThreadExecutor(),
-                new androidx.credentials.CredentialManagerCallback<androidx.credentials.GetCredentialResponse, androidx.credentials.exceptions.GetCredentialException>() {
-                    @Override
-                    public void onResult(androidx.credentials.GetCredentialResponse response) {
-                        handleSignIn(response.getCredential());
-                    }
-                    @Override
-                    public void onError(@NonNull androidx.credentials.exceptions.GetCredentialException e) {
-                        showError("Google Error: " + e.getMessage());
-                    }
-                });
-    }
-
-    private void handleSignIn(androidx.credentials.Credential credential) {
-        if (credential instanceof androidx.credentials.CustomCredential &&
-                credential.getType().equals(com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
-            try {
-                com.google.android.libraries.identity.googleid.GoogleIdTokenCredential tokenCredential =
-                        com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.createFrom(credential.getData());
-                runOnUiThread(() -> presenter.loginWithGoogle(tokenCredential.getIdToken()));
-            } catch (Exception e) {
-                showError("Token Error");
-            }
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new SignInFragment())
+                .commit();
         }
+
+        findViewById(R.id.btnGoogle).setOnClickListener(v ->
+                presenter.signInWithGoogle(this, getString(R.string.default_web_client_id))
+        );
+
+        findViewById(R.id.btnGuest).setOnClickListener(v -> navigateToHome());
     }
 
     @Override
     public void showWelcomeMessage(String name) {
-        runOnUiThread(() -> Toast.makeText(this, "Welcome " + name, Toast.LENGTH_SHORT).show());
+        Toast.makeText(this, "Hello " + name, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showError(String message) {
-        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void navigateToHome() {
-        runOnUiThread(() -> {
-            Toast.makeText(this, "Redirecting to Home...", Toast.LENGTH_SHORT).show();
-            // Intent intent = new Intent(this, HomeActivity.class);
-            // startActivity(intent);
-            // finish();
-        });
+        Toast.makeText(this, "Go to HomeActivity", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void openSignUp() {
+        if(textTitle != null && textSubTitle != null) {
+            textTitle.setText("Create Account");
+            textSubTitle.setText("Sign up to start planning meals");
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new SignupFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
-    public void openSignUp() {
-     getSupportFragmentManager()
-             .beginTransaction()
-             .replace(R.id.fragmentContainerView,new SignupFragment())
-             .addToBackStack(null).commit();
-     textSubTitle.setText("Sign up to start planning meals");
-     textTitle.setText("Create Account");
-     }
+    public void openSignIn() {
+        if(textTitle != null && textSubTitle != null) {
+            textTitle.setText("Welcome Back");
+            textSubTitle.setText("Sign in to continue");
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new SignInFragment())
+                .commit();
+    }
+
 
     @Override
-    public void openSignIn() {
-    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,new SignInFragment()).commit();
-        textTitle.setText("Welcome Back");
-        textSubTitle.setText("Sign in to continue");
+    public void showLoading() {
+        // Optional: show progress bar
+    }
+
+    @Override
+    public void hideLoading() {
+        // Optional: hide progress bar
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.detachView();
+        super.onDestroy();
+    }
+
+     public void onLoginClicked(String email, String password) {
+        presenter.loginWithEmailAndPassword(email, password);
+    }
+
+    public void onRegisterClicked(String email, String password) {
+        presenter.registerWithEmailAndPassword(email, password);
+    }
+
+    public AuthContract.Presenter getPresenter() {
+        return presenter;
     }
 }

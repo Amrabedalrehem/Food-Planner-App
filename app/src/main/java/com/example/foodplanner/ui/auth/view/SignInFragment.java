@@ -12,33 +12,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import com.example.foodplanner.R;
 import com.example.foodplanner.ui.auth.presenter.AuthContract;
-import com.example.foodplanner.ui.auth.presenter.AuthPresenter;
 
-public class SignInFragment extends Fragment  {
-    AuthContract.View authContract;
-    private AuthPresenter presenter;
-    Button btnSignIn,switchToSignUpBtn;
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    TextView textViewSignIn;
-      public SignInFragment() {
-        // Required empty public constructor
-    }
+import android.widget.TextView;
+
+
+public class SignInFragment extends Fragment {
+
+    private EditText emailEditText, passwordEditText;
+    private Button btnSignIn;
+    private TextView btnSwitchToSignUp;
+
+    private AuthContract.View authView;
+    private AuthContract.Presenter presenter;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        authContract = (AuthContract.View) context;
+
+        if (context instanceof AuthContract.View) {
+            authView = (AuthContract.View) context;
+            presenter = ((AuthenticationActivity) context).getPresenter();
+        } else {
+            throw new RuntimeException("Parent activity must implement AuthContract.View");
+        }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,29 +48,28 @@ public class SignInFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        textViewSignIn = view.findViewById(R.id.tvSignUp);
-        emailEditText = view.findViewById(R.id.signInemail);
+
+         emailEditText = view.findViewById(R.id.signInemail);
         passwordEditText = view.findViewById(R.id.signInpassword);
-        presenter = new AuthPresenter((AuthContract.View) getActivity());
-        btnSignIn = view.findViewById(R.id.btnSwitchSignUp);
-        btnSignIn.setOnClickListener(v -> {
+
+         btnSignIn = view.findViewById(R.id.btnSwitchSignUp);
+         btnSwitchToSignUp = view.findViewById(R.id.textSignUp);
+
+         btnSignIn.setOnClickListener(v -> {
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
 
-            if(email.isEmpty() || password.isEmpty()) {
-                authContract.showError("Please enter email and password");
+            if (email.isEmpty() || password.isEmpty()) {
+                authView.showError("Email and password cannot be empty");
             } else {
                 presenter.loginWithEmailAndPassword(email, password);
             }
         });
 
-
-        textViewSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                authContract.openSignUp();
+         btnSwitchToSignUp.setOnClickListener(v -> {
+            if(authView != null) {
+                authView.openSignUp();
             }
         });
-
     }
 }

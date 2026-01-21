@@ -53,6 +53,8 @@ dependencies {
     implementation libs.lottie
     implementation libs.rxjava
     implementation libs.rxandroid
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
 
     // مكتبات الاختبار
     testImplementation libs.junit
