@@ -6,24 +6,18 @@ import android.content.Context;
 import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.annotation.NonNull;
 import androidx.credentials.CredentialManager;
 import androidx.credentials.CredentialManagerCallback;
-import androidx.credentials.CredentialOption;
-import androidx.credentials.GetCredentialRequest;
+ import androidx.credentials.GetCredentialRequest;
 import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.GetCredentialException;
-
 import com.example.foodplanner.data.repository.auth.AuthCallback;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 
 public class FirebaseAuthHelper {

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodPlanner" >
         <activity
-            android:name=".ui.home.view.Home"
+            android:name=".ui.home.view.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.splash.SplashActivity"

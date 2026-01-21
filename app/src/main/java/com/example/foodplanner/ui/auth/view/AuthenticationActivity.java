@@ -51,7 +51,7 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthCon
 
     @Override
     public void navigateToHome() {
-        Toast.makeText(this, "Go to Home", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Go to HomeActivity", Toast.LENGTH_SHORT).show();
     }
     @Override
     public void openSignUp() {
