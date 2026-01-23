@@ -5,7 +5,6 @@ public class Category {
     private String strCategory;
     private String strCategoryThumb;
     private String strCategoryDescription;
-
     public Category() {
 
     }

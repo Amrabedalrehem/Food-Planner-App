@@ -18,7 +18,7 @@ import com.example.foodplanner.ui.auth.presenter.AuthContract;
 import android.widget.TextView;
 
 
-public class SignInFragment extends Fragment {
+public class SignInFragment extends Fragment  {
 
     private EditText emailEditText, passwordEditText;
     private Button btnSignIn;

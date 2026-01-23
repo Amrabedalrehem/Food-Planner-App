@@ -1,4 +1,4 @@
-package com.example.foodplanner.data.datasource.network.auth;
+package com.example.foodplanner.data.datasource.remote.auth;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -12,7 +12,7 @@ import androidx.credentials.CredentialManagerCallback;
  import androidx.credentials.GetCredentialRequest;
 import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.GetCredentialException;
-import com.example.foodplanner.data.repository.auth.AuthCallback;
+
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;

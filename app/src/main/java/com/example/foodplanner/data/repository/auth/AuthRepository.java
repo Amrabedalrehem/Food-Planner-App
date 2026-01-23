@@ -2,7 +2,8 @@ package com.example.foodplanner.data.repository.auth;
 import android.app.Activity;
 import android.content.Context;
 
-import com.example.foodplanner.data.datasource.network.auth.FirebaseAuthHelper;
+import com.example.foodplanner.data.datasource.remote.auth.AuthCallback;
+import com.example.foodplanner.data.datasource.remote.auth.FirebaseAuthHelper;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthRepository {

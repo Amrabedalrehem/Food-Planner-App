@@ -1,5 +1,8 @@
 package com.example.foodplanner.network;
 
+import com.example.foodplanner.data.datasource.remote.catogories.CategoryResponse;
+import com.example.foodplanner.data.datasource.remote.meal.MealResponse;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

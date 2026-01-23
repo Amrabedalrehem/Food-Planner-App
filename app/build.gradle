@@ -55,6 +55,8 @@ dependencies {
     implementation libs.rxandroid
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation libs.cardview
+    implementation libs.recyclerview
 
     // مكتبات الاختبار
     testImplementation libs.junit

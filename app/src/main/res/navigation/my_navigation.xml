@@ -6,7 +6,36 @@
     app:startDestination="@id/home_Ffragment">
     <fragment
         android:id="@+id/home_Ffragment"
-        android:name="com.example.foodplanner.ui.home.view.Home_Ffragment"
+        android:name="com.example.foodplanner.ui.home.home.view.homeFragment"
         android:label="fragment_home__ffragment"
-        tools:layout="@layout/fragment_home__ffragment" />
+        tools:layout="@layout/fragment_home__ffragment" >
+        <action
+            android:id="@+id/action_home_Ffragment_to_allcategories"
+            app:destination="@id/allcategories" />
+    </fragment>
+    <fragment
+        android:id="@+id/planner"
+        android:name="com.example.foodplanner.ui.home.planner.view.planner"
+        android:label="fragment_planner"
+        tools:layout="@layout/fragment_planner" />
+    <fragment
+        android:id="@+id/search3"
+        android:name="com.example.foodplanner.ui.home.search.view.search"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.foodplanner.ui.home.profile.view.profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/favorites"
+        android:name="com.example.foodplanner.ui.home.favorites.view.favorites"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/allcategories"
+        android:name="com.example.foodplanner.ui.home.home.view.categorries.allcategories"
+        android:label="fragment_allcategories"
+        tools:layout="@layout/fragment_allcategories" />
 </navigation>

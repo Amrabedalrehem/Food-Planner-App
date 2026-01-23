@@ -1,7 +1,6 @@
-package com.example.foodplanner.data.datasource.network.meal;
+package com.example.foodplanner.data.datasource.remote.meal;
 
 import com.example.foodplanner.data.models.Meal;
-import com.example.foodplanner.network.MealResponse;
 import com.example.foodplanner.network.MealService;
 import com.example.foodplanner.network.Network;
 
@@ -18,10 +17,11 @@ public class  MealRemoteDataSource {
 
     public MealRemoteDataSource()
     {
+
         mealService = Network.getInstance().mealService;
     }
 
-    public void getProducts(MealNetworkResponse callback){
+    public void getProducts(MealCallback callback){
 
         mealService.getLatestMeals().enqueue(new Callback<MealResponse>() {
             @Override
@@ -30,10 +30,8 @@ public class  MealRemoteDataSource {
                     productList = response.body().MealList;
                     callback.onSuccess(productList);
 
-
                 }
             }
-
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {
                 callback.onError(t.getMessage());

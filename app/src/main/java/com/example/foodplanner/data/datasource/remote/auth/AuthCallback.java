@@ -1,4 +1,4 @@
-package com.example.foodplanner.data.repository.auth;
+package com.example.foodplanner.data.datasource.remote.auth;
 
 import com.google.firebase.auth.FirebaseUser;
 

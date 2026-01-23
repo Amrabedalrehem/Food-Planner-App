@@ -70,10 +70,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-     <ScrollView
-        android:layout_width="0dp"
+ <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/header_section"
@@ -129,6 +127,7 @@
                                 android:textColor="#FFFFFF"
                                 android:textSize="11sp"
                                 android:textStyle="bold"/>
+
                         </androidx.cardview.widget.CardView>
 
                     </RelativeLayout>
@@ -223,11 +222,12 @@
                         android:gravity="center"
                         android:padding="8dp">
 
-                        <TextView
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="👨‍🍳"
-                            android:textSize="32sp" />
+                                android:src="@drawable/chef"
+                            android:textSize="32sp"
+                            app:tint="#FF6B00" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -257,11 +257,12 @@
                         android:gravity="center"
                         android:padding="8dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🌍"
-                            android:textSize="32sp" />
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@drawable/ic_location"
+                            app:tint="#00A63E" />
+
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -290,11 +291,12 @@
                         android:gravity="center"
                         android:padding="8dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🥕"
-                            android:textSize="32sp" />
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@drawable/ingredients"
+                            app:tint="#155DFC" />
+
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -308,10 +310,6 @@
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
-
-
-
-
 
 
 
@@ -332,19 +330,22 @@
 
                 <TextView
                     android:layout_height="wrap_content"
+                    android:id="@+id/tvSeeAll"
                      android:layout_width="wrap_content"
                     android:text="See All →"
                     android:textColor="#FF6B00"
                     android:textStyle="bold"/>
             </LinearLayout>
 
-             <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="false"/>
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

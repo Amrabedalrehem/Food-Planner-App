@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodPlanner" >
         <activity
-            android:name=".ui.home.view.HomeActivity"
+            android:name=".ui.auth.view.AuthenticationActivity"
             android:exported="false" />
         <activity
             android:name=".ui.splash.SplashActivity"
@@ -23,10 +23,7 @@
             android:name=".ui.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.view.AuthenticationActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
