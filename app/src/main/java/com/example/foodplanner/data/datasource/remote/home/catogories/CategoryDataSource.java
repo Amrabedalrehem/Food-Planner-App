@@ -1,6 +1,6 @@
-package com.example.foodplanner.data.datasource.remote.catogories;
+package com.example.foodplanner.data.datasource.remote.home.catogories;
 import com.example.foodplanner.data.models.Category;
-import com.example.foodplanner.network.MealService;
+import com.example.foodplanner.data.datasource.remote.MealService;
 import com.example.foodplanner.network.Network;
 import java.util.List;
 import retrofit2.Call;

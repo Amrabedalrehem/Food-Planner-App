@@ -1,4 +1,4 @@
-package com.example.foodplanner.ui.home.home.view.categorries;
+package com.example.foodplanner.ui.home.home.view.Countries;
 
 import android.os.Bundle;
 
@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,66 +16,69 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Category;
-import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesContract;
+import com.example.foodplanner.data.models.Countries;
 import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesPresenter;
+import com.example.foodplanner.ui.home.home.presentation.Countries.CountriesContract;
+import com.example.foodplanner.ui.home.home.presentation.Countries.CountriesPresenter;
+import com.example.foodplanner.ui.home.home.view.categorries.AllCategoriesAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class allcategories extends Fragment implements CategoriesContract.View {
-    private CategoriesPresenter presenter;
-    private RecyclerView recyclerView;
-    private ImageView imageViewBack;
-    private AllCategoriesAdapter adapter;
-    private List<Category> categoriesList = new ArrayList<>();
+import retrofit2.Retrofit;
+
+
+public class countriesFragment extends Fragment implements CountriesContract.View {
+    CountriesContract.Presenter presenter;
+    RecyclerView recyclerView;
+    CountriesAdapter countriesAdapter;
+    List<Countries> countriesList = new ArrayList<>();
+    ImageView imageView;
+
+    public countriesFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+         imageView = view.findViewById(R.id.allCountriesBack);
+        presenter = new CountriesPresenter(this);
+        presenter.getCountries();
 
-        recyclerView = view.findViewById(R.id.rvAllCategories);
-        imageViewBack = view.findViewById(R.id.allCategoriesBack);
-        adapter = new AllCategoriesAdapter(categoriesList);
 
+        countriesAdapter = new CountriesAdapter(countriesList);
+        recyclerView = view.findViewById(R.id.rvAllCountries);
+        recyclerView.setAdapter(countriesAdapter);
         GridLayoutManager layoutManager =
-                new GridLayoutManager(requireContext(), 2);
+                new GridLayoutManager(requireContext(), 1);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        presenter = new CategoriesPresenter(this);
-        presenter.getCategories();
-         BottomNavigationView navBar = getActivity().findViewById(R.id.bottomNavigationView);
-         navBar.getMenu().setGroupCheckable(0, true, false);
+
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottomNavigationView);
+        navBar.getMenu().setGroupCheckable(0, true, false);
         for (int i = 0; i < navBar.getMenu().size(); i++) {
             navBar.getMenu().getItem(i).setChecked(false);
         }
-        imageViewBack.setOnClickListener(v -> {
+        imageView.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(this);
             navController.popBackStack();
         });
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_allcategories, container, false);
+        return inflater.inflate(R.layout.fragment_countries, container, false);
     }
 
     @Override
-    public void showCategories(List<Category> categories) {
-        categoriesList.clear();
-        categoriesList.addAll(categories);
-        adapter.notifyDataSetChanged();
+    public void showCountries(List<Countries> countries) {
+        countriesList.clear();
+        countriesList.addAll(countries);
+        countriesAdapter.notifyDataSetChanged();
     }
 
     @Override

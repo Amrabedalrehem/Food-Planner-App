@@ -1,7 +1,7 @@
 package com.example.foodplanner.data.repository.categorie;
 
-import com.example.foodplanner.data.datasource.remote.catogories.CategoryCallback;
-import com.example.foodplanner.data.datasource.remote.catogories.CategoryDataSource;
+import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
+import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryDataSource;
 
 public class CategoriesRepository {
     CategoryDataSource categoryDataSource;

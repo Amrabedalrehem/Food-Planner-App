@@ -103,6 +103,7 @@
                         android:background="#FFE5CC">
 
                         <ImageView
+                            android:id="@+id/imageRandom"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -163,7 +164,7 @@
                                 android:layout_marginEnd="4dp"/>
 
                             <TextView
-                                android:id="@+id/tvMealCuisine"
+                                android:id="@+id/tvMealCountery"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Indian"
@@ -200,17 +201,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="16dp"
-                android:layout_marginTop="12dp">
+                android:paddingBottom="10dp">
 
-                <!-- Categories Card -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/rvِQACategories"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
                     app:cardBackgroundColor="#FFE5CC"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp">
@@ -218,14 +221,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
                         android:padding="8dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                                android:src="@drawable/chef"
+                            android:src="@drawable/chef"
                             android:textSize="32sp"
                             app:tint="#FF6B00" />
 
@@ -240,21 +243,20 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Countries Card -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/rvQACountries"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
                     app:cardBackgroundColor="#D4F4DD"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:gravity="center"
+                         android:orientation="vertical"
                         android:padding="8dp">
 
                         <ImageView
@@ -262,8 +264,6 @@
                             android:layout_height="26dp"
                             android:src="@drawable/ic_location"
                             app:tint="#00A63E" />
-
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -277,6 +277,7 @@
 
                 <!-- Ingredients Card -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/rvQAIngredients"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -287,8 +288,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
                         android:padding="8dp">
 
                         <ImageView

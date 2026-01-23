@@ -1,10 +1,8 @@
 package com.example.foodplanner.ui.home.home.presentation.Categories;
 
-import com.example.foodplanner.data.datasource.remote.catogories.CategoryCallback;
-import com.example.foodplanner.data.datasource.remote.catogories.CategoryDataSource;
+import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
 import com.example.foodplanner.data.models.Category;
 import com.example.foodplanner.data.repository.categorie.CategoriesRepository;
-import com.example.foodplanner.ui.auth.presenter.AuthContract;
 
 import java.util.List;
 
