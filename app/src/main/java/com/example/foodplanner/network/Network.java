@@ -1,5 +1,7 @@
 package com.example.foodplanner.network;
 
+import com.example.foodplanner.data.datasource.remote.MealService;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,7 +20,7 @@ public class Network {
     }
 
 
-    public  static Network getInstance(){
+    public  static synchronized Network getInstance(){
 
         if (instance == null){
 

@@ -70,10 +70,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-     <ScrollView
-        android:layout_width="0dp"
+ <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/header_section"
@@ -95,6 +93,7 @@
                 app:cardElevation="4dp">
 
                 <LinearLayout
+                    android:id="@+id/card_Details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -105,6 +104,7 @@
                         android:background="#FFE5CC">
 
                         <ImageView
+                            android:id="@+id/imageRandom"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -129,6 +129,7 @@
                                 android:textColor="#FFFFFF"
                                 android:textSize="11sp"
                                 android:textStyle="bold"/>
+
                         </androidx.cardview.widget.CardView>
 
                     </RelativeLayout>
@@ -164,7 +165,7 @@
                                 android:layout_marginEnd="4dp"/>
 
                             <TextView
-                                android:id="@+id/tvMealCuisine"
+                                android:id="@+id/tvMealCountery"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Indian"
@@ -201,17 +202,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="16dp"
-                android:layout_marginTop="12dp">
+                android:paddingBottom="10dp">
 
-                <!-- Categories Card -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/rvِQACategories"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
                     app:cardBackgroundColor="#FFE5CC"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp">
@@ -219,15 +222,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
                         android:padding="8dp">
 
-                        <TextView
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="👨‍🍳"
-                            android:textSize="32sp" />
+                            android:src="@drawable/chef"
+                            android:textSize="32sp"
+                            app:tint="#FF6B00" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -240,29 +244,27 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Countries Card -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/rvQACountries"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
                     app:cardBackgroundColor="#D4F4DD"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:gravity="center"
+                         android:orientation="vertical"
                         android:padding="8dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🌍"
-                            android:textSize="32sp" />
-
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@drawable/ic_location"
+                            app:tint="#00A63E" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -276,6 +278,7 @@
 
                 <!-- Ingredients Card -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/rvQAIngredients"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -286,15 +289,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
                         android:padding="8dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🥕"
-                            android:textSize="32sp" />
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@drawable/ingredients"
+                            app:tint="#155DFC" />
+
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -308,10 +312,6 @@
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
-
-
-
-
 
 
 
@@ -332,19 +332,22 @@
 
                 <TextView
                     android:layout_height="wrap_content"
+                    android:id="@+id/tvSeeAll"
                      android:layout_width="wrap_content"
                     android:text="See All →"
                     android:textColor="#FF6B00"
                     android:textStyle="bold"/>
             </LinearLayout>
 
-             <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingEnd="16dp"
+                android:nestedScrollingEnabled="false"/>
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

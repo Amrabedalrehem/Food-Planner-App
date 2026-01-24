@@ -1,0 +1,71 @@
+package com.example.foodplanner.ui.home.home.view.categorries;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHostController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
+import com.example.foodplanner.R;
+import com.example.foodplanner.data.models.Category;
+import java.util.List;
+
+public class AllCategoriesAdapter extends RecyclerView.Adapter<AllCategoriesAdapter.ViewHolder> {
+    private List<Category> categories;
+    private static final String TAG = "RecyclerView";
+      public AllCategoriesAdapter(  List<Category> categories) {
+        this.categories = categories;
+      }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_all_caregories, parent, false);
+        Log.i(TAG, "oncreate");
+
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        final Category currentCategory = categories.get(position);
+        if (holder.txtTitle != null) {
+            holder.txtTitle.setText(currentCategory.getStrCategory());
+        } else {
+            Log.e(TAG, "txtTitle is NULL at position: " + position);
+        }
+        Glide.with(holder.itemView)
+                .load(currentCategory.getStrCategoryThumb())
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.errorplaceholder)
+                .into(holder.imageView);
+
+    }
+    @Override
+    public int getItemCount() {
+
+        return categories.size();
+    }
+
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView txtTitle;
+        public ImageView imageView;
+        public View layout;
+        public ViewHolder(View v) {
+            super(v);
+            layout = v;
+            txtTitle = v.findViewById(R.id.tvAllCategoryName);
+            imageView = v.findViewById(R.id.imgAllCategory);
+        }
+    }
+}

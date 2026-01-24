@@ -2,7 +2,7 @@ package com.example.foodplanner.ui.auth.presenter;
 
 import android.app.Activity;
 
-import com.example.foodplanner.data.repository.auth.AuthCallback;
+import com.example.foodplanner.data.datasource.remote.auth.AuthCallback;
 import com.example.foodplanner.data.repository.auth.AuthRepository;
  import com.google.firebase.auth.FirebaseUser;
 
