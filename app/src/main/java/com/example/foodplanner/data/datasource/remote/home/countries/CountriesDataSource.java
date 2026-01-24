@@ -18,7 +18,7 @@ public class CountriesDataSource {
     {
         mealService = Network.getInstance().mealService;
     }
-    public static CountriesDataSource  getInstance()
+    public static synchronized CountriesDataSource  getInstance()
     {
         if(countriesDataSource==null)
         {

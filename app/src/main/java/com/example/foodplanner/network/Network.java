@@ -20,7 +20,7 @@ public class Network {
     }
 
 
-    public  static Network getInstance(){
+    public  static synchronized Network getInstance(){
 
         if (instance == null){
 

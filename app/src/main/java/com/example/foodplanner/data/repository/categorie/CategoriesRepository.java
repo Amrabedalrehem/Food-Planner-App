@@ -11,7 +11,7 @@ public class CategoriesRepository {
     {
         categoryDataSource = CategoryDataSource.getInstance();
     }
-    public  static  CategoriesRepository getInstance()
+    public  static synchronized  CategoriesRepository getInstance()
     {
         if(categoriesRepository ==null)
         {

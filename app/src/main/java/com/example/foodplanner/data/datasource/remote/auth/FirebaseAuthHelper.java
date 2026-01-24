@@ -27,7 +27,7 @@ public class FirebaseAuthHelper {
     private final CredentialManager credentialManager;
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
-    private static FirebaseAuthHelper instance;
+    private static  FirebaseAuthHelper instance;
 
     private FirebaseAuthHelper(Context context) {
         this.context = context.getApplicationContext();

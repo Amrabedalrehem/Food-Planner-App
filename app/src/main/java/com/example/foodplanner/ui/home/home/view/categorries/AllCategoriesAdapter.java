@@ -37,7 +37,11 @@ public class AllCategoriesAdapter extends RecyclerView.Adapter<AllCategoriesAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final Category currentCategory = categories.get(position);
-        holder.txtTitle.setText(currentCategory.getStrCategory());
+        if (holder.txtTitle != null) {
+            holder.txtTitle.setText(currentCategory.getStrCategory());
+        } else {
+            Log.e(TAG, "txtTitle is NULL at position: " + position);
+        }
         Glide.with(holder.itemView)
                 .load(currentCategory.getStrCategoryThumb())
                 .placeholder(R.drawable.placeholder)

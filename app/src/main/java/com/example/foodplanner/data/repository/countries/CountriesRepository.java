@@ -15,7 +15,7 @@ public class CountriesRepository {
     {
         countriesDataSource = CountriesDataSource.getInstance();
     }
-    public  static  CountriesRepository getInstance()
+    public  static synchronized  CountriesRepository getInstance()
     {
         if(countriesRepository==null)
         {

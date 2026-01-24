@@ -21,7 +21,7 @@ public class  MealRemoteDataSource {
     {
       mealService  = Network.getInstance().mealService;
     }
-    public static MealRemoteDataSource getInstance() {
+    public static synchronized MealRemoteDataSource getInstance() {
         if (mealRemoteDataSource == null) {
             mealRemoteDataSource = new MealRemoteDataSource();
         }

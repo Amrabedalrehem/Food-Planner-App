@@ -1,0 +1,18 @@
+package com.example.foodplanner.data.datasource.remote.home.details;
+
+import com.example.foodplanner.data.models.Meal;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+public class detailsResponse {
+    @SerializedName("meals")
+    private List<Meal> meals;
+    public List<Meal> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
+    }
+}

@@ -12,7 +12,7 @@ public class MealRepository {
     {
         mealRemoteDataSource = MealRemoteDataSource.getInstance();
     }
-    public  static  MealRepository getInstance()
+    public  static synchronized MealRepository getInstance()
     {
         if(mealRepository ==null)
         {

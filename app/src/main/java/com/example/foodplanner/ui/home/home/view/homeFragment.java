@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,8 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
     private CardView  rvQAIngredients ;
     private  CardView  rvQACountries;
     private CardView  rvِQACategories;
-
+    private CardView search_card;
+    private LinearLayout card_Details;
     @Nullable
     @Override
 
@@ -66,6 +68,8 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
         rvQAIngredients =view.findViewById(R.id.rvQAIngredients);
         rvQACountries = view.findViewById(R.id.rvQACountries);
         rvِQACategories = view.findViewById(R.id.rvِQACategories);
+        search_card = view.findViewById(R.id.search_card);
+        card_Details = view.findViewById(R.id.card_Details);
 
 
         adapter = new homeCategoriesAdapter(categories, true);
@@ -96,7 +100,14 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(R.id.action_home_Ffragment_to_allcategories);
         });
-
+        search_card.setOnClickListener(v -> {
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.action_home_Ffragment_to_search3);
+        });
+        card_Details.setOnClickListener(v -> {
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.action_home_Ffragment_to_detialsFragment);
+        });
 
     }
 

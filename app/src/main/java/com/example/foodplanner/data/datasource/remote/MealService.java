@@ -24,10 +24,14 @@ public interface MealService {
     Call<CountriesResponse> getListALLCountries(@Query("a") String countries);
     @GET("list.php")
     Call<IngredientsResponse> getListAllIngredients(@Query("i") String strIngredient);
+    @GET("lookup.php")
+    Call<MealResponse> getMealDetailsById(@Query("i") String id);
+
 }
 
 
  /*
+ lookup.php?i=52772
    @GET("randomselection.php")
     Call<ListOfMealResponse> getRandomSelection();
 
@@ -37,8 +41,7 @@ public interface MealService {
      @GET("search.php")
     Call<ListOfMealResponse> searchMealByFirstLetter(@Query("f") String searchFirstLetter);
 
-     @GET("lookup.php")
-    Call<ListOfMealResponse> getMealDetailsById(@Query("i") String id);
+
 
     @GET("list.php")
     Call<ListOfMealResponse> getListAllCategories(@Query("c") String listKeyword);

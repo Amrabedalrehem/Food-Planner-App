@@ -16,7 +16,7 @@ public class IngredientsRepository {
     {
         ingredientsDataSource = IngredientsDataSource.getInstance();
     }
-    public  static  IngredientsRepository  getInstance()
+    public  static synchronized  IngredientsRepository  getInstance()
     {
         if(null == ingredientsRepository)
         {

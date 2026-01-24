@@ -18,6 +18,12 @@
         <action
             android:id="@+id/action_home_Ffragment_to_integredients"
             app:destination="@id/integredients" />
+        <action
+            android:id="@+id/action_home_Ffragment_to_search3"
+            app:destination="@id/search3" />
+        <action
+            android:id="@+id/action_home_Ffragment_to_detialsFragment"
+            app:destination="@id/detialsFragment" />
     </fragment>
     <fragment
         android:id="@+id/planner"
@@ -54,4 +60,9 @@
         android:name="com.example.foodplanner.ui.home.home.view.Ingredients.integredients"
         android:label="fragment_integredients"
         tools:layout="@layout/fragment_integredients" />
+    <fragment
+        android:id="@+id/detialsFragment"
+        android:name="com.example.foodplanner.ui.home.home.view.detials.detialsFragment"
+        android:label="fragment_detials"
+        tools:layout="@layout/fragment_detials" />
 </navigation>

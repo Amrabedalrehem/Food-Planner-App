@@ -21,7 +21,7 @@ public  static  IngredientsDataSource ingredientsDataSource;
     {
         mealService = Network.getInstance().mealService;
     }
-   public static IngredientsDataSource getInstance()
+   public static synchronized IngredientsDataSource getInstance()
     {
         if(ingredientsDataSource ==null)
         {

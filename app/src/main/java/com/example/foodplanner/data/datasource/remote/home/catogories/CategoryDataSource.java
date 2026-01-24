@@ -14,7 +14,7 @@ public class CategoryDataSource {
         mealService = Network.getInstance().mealService;
     }
 
-     public static CategoryDataSource getInstance() {
+     public static synchronized CategoryDataSource getInstance() {
         if (instance == null) {
             instance = new CategoryDataSource();
         }
