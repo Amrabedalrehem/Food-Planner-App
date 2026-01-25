@@ -17,13 +17,13 @@
             android:name=".ui.auth.view.AuthenticationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
