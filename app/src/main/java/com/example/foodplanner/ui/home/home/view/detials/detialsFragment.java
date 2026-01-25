@@ -32,7 +32,6 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     private TextView tvRecipeTitle, tvCuisine, tvCategory;
     private RecyclerView rvIngredients, rvSteps;
     private DetailsPresenter presenter;
-
     private ImageButton btnBack, btnFavorite;
     private WebView webViewVideo;
     private View cardVideo;

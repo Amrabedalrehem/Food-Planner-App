@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_home_Ffragment_to_detialsFragment"
             app:destination="@id/detialsFragment" />
+        <action
+            android:id="@+id/action_home_Ffragment_to_filterby"
+            app:destination="@id/filterby" />
     </fragment>
     <fragment
         android:id="@+id/planner"

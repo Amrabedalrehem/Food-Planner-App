@@ -49,8 +49,7 @@ public class AllCategoriesAdapter extends RecyclerView.Adapter<AllCategoriesAdap
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.errorplaceholder)
                 .into(holder.imageView);
-    //===================
-        holder.layout.setOnClickListener(v -> {
+         holder.layout.setOnClickListener(v -> {
             allcategoriesDirections.ActionAllcategoriesToFilterby
             action =
                     allcategoriesDirections.actionAllcategoriesToFilterby(
