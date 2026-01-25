@@ -1,4 +1,4 @@
-package com.example.foodplanner.data.repository.countries;
+package com.example.foodplanner.data.repository.home.countries;
 
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
 import com.example.foodplanner.data.datasource.remote.home.countries.CountriesDataSource;

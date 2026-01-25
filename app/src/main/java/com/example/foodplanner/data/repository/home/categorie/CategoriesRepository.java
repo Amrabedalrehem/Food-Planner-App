@@ -1,4 +1,4 @@
-package com.example.foodplanner.data.repository.categorie;
+package com.example.foodplanner.data.repository.home.categorie;
 
 import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
 import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryDataSource;

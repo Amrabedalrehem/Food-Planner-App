@@ -3,8 +3,6 @@ package com.example.foodplanner.data.datasource.remote;
 import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryResponse;
 import com.example.foodplanner.data.datasource.remote.home.countries.CountriesResponse;
 import com.example.foodplanner.data.datasource.remote.home.ingredients.IngredientsResponse;
-import com.example.foodplanner.data.datasource.remote.home.meal.MealResponse;
-import com.example.foodplanner.data.models.Ingredients;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -26,39 +24,23 @@ public interface MealService {
     Call<IngredientsResponse> getListAllIngredients(@Query("i") String strIngredient);
     @GET("lookup.php")
     Call<MealResponse> getMealDetailsById(@Query("i") String id);
+    @GET("randomselection.php")
+    Call<MealResponse> getRandomSelection();
+    @GET("latest.php")
+    Call<MealResponse> getLatestMeals();
+    @GET("search.php")
+    Call<MealResponse> searchMealByFirstLetter(@Query("f") String searchFirstLetter);
+    @GET("list.php")
+    Call<MealResponse> getListAllCategories(@Query("c") String listKeyword);
+    @GET("filter.php")
+    Call<MealResponse> filterByMainIngredient(@Query("i") String ingredient);
+    @GET("filter.php")
+    Call<MealResponse> filterByMultiIngredient(@Query("i") String multiIngredients);
+    @GET("filter.php")
+    Call<MealResponse> filterByCategory(@Query("c") String category);
+    @GET("filter.php")
+    Call<MealResponse> filterByArea(@Query("a") String area);
+
+
 
 }
-
-
- /*
- lookup.php?i=52772
-   @GET("randomselection.php")
-    Call<ListOfMealResponse> getRandomSelection();
-
-   @GET("latest.php")
-    Call<ListOfMealResponse> getLatestMeals();
-
-     @GET("search.php")
-    Call<ListOfMealResponse> searchMealByFirstLetter(@Query("f") String searchFirstLetter);
-
-
-
-    @GET("list.php")
-    Call<ListOfMealResponse> getListAllCategories(@Query("c") String listKeyword);
-
-
-
-
-
-     @GET("filter.php")
-    Call<ListOfMealResponse> filterByMainIngredient(@Query("i") String ingredient);
-
-    @GET("filter.php")
-    Call<ListOfMealResponse> filterByMultiIngredient(@Query("i") String multiIngredients);
-
-    @GET("filter.php")
-    Call<ListOfMealResponse> filterByCategory(@Query("c") String category);
-
-    @GET("filter.php")
-    Call<ListOfMealResponse> filterByArea(@Query("a") String area);
-    * */

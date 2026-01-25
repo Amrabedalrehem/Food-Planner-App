@@ -1,6 +1,5 @@
-package com.example.foodplanner.data.datasource.remote.home.meal;
+package com.example.foodplanner.data.datasource.remote;
 
-import com.example.foodplanner.data.models.Category;
 import com.example.foodplanner.data.models.Meal;
 import com.google.gson.annotations.SerializedName;
 

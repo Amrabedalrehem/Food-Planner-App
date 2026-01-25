@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.models.Category;
+import com.example.foodplanner.ui.home.home.view.homeFragmentDirections;
+
 import java.util.List;
 
 public class AllCategoriesAdapter extends RecyclerView.Adapter<AllCategoriesAdapter.ViewHolder> {
@@ -47,7 +49,17 @@ public class AllCategoriesAdapter extends RecyclerView.Adapter<AllCategoriesAdap
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.errorplaceholder)
                 .into(holder.imageView);
-
+    //===================
+        holder.layout.setOnClickListener(v -> {
+            allcategoriesDirections.ActionAllcategoriesToFilterby
+            action =
+                    allcategoriesDirections.actionAllcategoriesToFilterby(
+                            "Categories",
+                            "Category",
+                            currentCategory.getStrCategory()
+                    );
+            Navigation.findNavController(v).navigate(action);
+        });
     }
     @Override
     public int getItemCount() {

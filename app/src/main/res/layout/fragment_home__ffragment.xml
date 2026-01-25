@@ -231,7 +231,7 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/chef"
                             android:textSize="32sp"
-                            app:tint="#FF6B00" />
+                             app:tint="#FF6B00" />
 
                         <TextView
                             android:layout_width="wrap_content"
