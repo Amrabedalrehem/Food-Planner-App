@@ -1,11 +1,8 @@
-package com.example.foodplanner.data.repository.details;
+package com.example.foodplanner.data.repository.home.details;
 
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
-import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
-import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryDataSource;
 import com.example.foodplanner.data.datasource.remote.home.details.detailsDataSource;
 import com.example.foodplanner.data.models.Meal;
-import com.example.foodplanner.data.repository.categorie.CategoriesRepository;
 
 import java.util.List;
 

@@ -2,8 +2,7 @@ package com.example.foodplanner.data.datasource.remote.home.details;
 
 import com.example.foodplanner.data.datasource.remote.MealService;
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
-import com.example.foodplanner.data.datasource.remote.home.ingredients.IngredientsResponse;
-import com.example.foodplanner.data.datasource.remote.home.meal.MealResponse;
+import com.example.foodplanner.data.datasource.remote.MealResponse;
 import com.example.foodplanner.data.models.Meal;
 import com.example.foodplanner.network.Network;
 

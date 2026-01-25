@@ -7,11 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.models.Ingredients;
+import com.example.foodplanner.ui.home.home.view.categorries.allcategoriesDirections;
 
 import java.util.List;
 
@@ -38,6 +40,18 @@ List<Ingredients> ingredients;
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.errorplaceholder)
                 .into(holder.imageView);
+
+        holder.layout.setOnClickListener(v -> {
+             integredientsDirections.ActionIntegredientsToFilterby action =
+                    integredientsDirections.actionIntegredientsToFilterby(
+                            "Ingredients",
+                            "Ingredient",
+                            ingredients.get(position).getStrIngredient()
+                    );
+            Navigation.findNavController(v).navigate(action);
+        });
+
+
     }
 
     @Override
@@ -52,6 +66,7 @@ List<Ingredients> ingredients;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            layout = itemView;
              txtTitle = itemView.findViewById(R.id.title_card_Ingredients);
              imageView = itemView.findViewById(R.id.image_card_categories_Ingredients);
         }

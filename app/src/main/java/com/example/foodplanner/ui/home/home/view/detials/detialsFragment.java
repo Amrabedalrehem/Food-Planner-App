@@ -72,7 +72,7 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
         }
          btnBack.setOnClickListener(v -> requireActivity().onBackPressed());
 
-        String mealId = getArguments() != null ? getArguments().getString("MEAL_ID") : "52772";
+        String mealId = detialsFragmentArgs.fromBundle(getArguments()).getId();
         presenter = new DetailsPresenter(mealId, this);
         presenter.getDetails();
 

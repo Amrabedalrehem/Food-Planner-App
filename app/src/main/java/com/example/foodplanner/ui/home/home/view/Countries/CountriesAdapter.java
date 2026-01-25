@@ -4,9 +4,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.models.Countries;
+import com.example.foodplanner.ui.home.home.view.homeFragmentDirections;
 
 import java.util.List;
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder> {
@@ -40,6 +42,16 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         } else{
              holder.tvInitials.setText("not Found");
         }
+        holder.layout.setOnClickListener(v -> {
+            countriesFragmentDirections.ActionCountriesFragmentToFilterby action =
+                    countriesFragmentDirections.actionCountriesFragmentToFilterby(
+                            "Countries",
+                            "Country",
+                            currentCountry.getStrArea()
+                    );
+            Navigation.findNavController(v).navigate(action);
+        });
+
     }
 
     @Override
@@ -51,9 +63,10 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         public TextView tvTitle;
         public TextView tvInitials;
         public TextView tvSubtitle;
-
+        public  View layout;
         public ViewHolder(View v) {
             super(v);
+            layout = v;
              tvTitle = v.findViewById(R.id.tv_title);
             tvInitials = v.findViewById(R.id.tv_initials);
             tvSubtitle = v.findViewById(R.id.tv_subtitle);

@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +50,7 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
     private CardView  rvِQACategories;
     private CardView search_card;
     private LinearLayout card_Details;
+    private String Id;
     @Nullable
     @Override
 
@@ -70,11 +72,10 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
         rvِQACategories = view.findViewById(R.id.rvِQACategories);
         search_card = view.findViewById(R.id.search_card);
         card_Details = view.findViewById(R.id.card_Details);
-
-
         adapter = new homeCategoriesAdapter(categories, true);
         GridLayoutManager layoutManager =
                 new GridLayoutManager(requireContext(), 2);
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -105,8 +106,11 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
             navController.navigate(R.id.action_home_Ffragment_to_search3);
         });
         card_Details.setOnClickListener(v -> {
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_home_Ffragment_to_detialsFragment);
+
+            homeFragmentDirections.ActionHomeFfragmentToDetialsFragment action =
+                    homeFragmentDirections.actionHomeFfragmentToDetialsFragment(Id);
+            Navigation.findNavController(v).navigate(action);
+
         });
 
     }
@@ -125,11 +129,11 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
     public void showRandomMeal(Meal meal) {
 
         if (meal != null) {
+            Id = meal.getIdMeal();
             Log.i("TAGamr", "showRandomMeal: " + meal);
             tvMealTitle.setText(meal.getStrMeal());
             tvMealCountery.setText(meal.getStrArea());
             tvMealDescription.setText(meal.getStrInstructions());
-
             Glide.with(this).load(meal.getStrMealThumb()).into(imageRandom);
             Glide.with(this)
                     .load(meal.getStrMealThumb())

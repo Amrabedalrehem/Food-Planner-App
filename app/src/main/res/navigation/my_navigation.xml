@@ -34,7 +34,11 @@
         android:id="@+id/search3"
         android:name="com.example.foodplanner.ui.home.search.view.search"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_search3_to_detialsFragment2"
+            app:destination="@id/detialsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profile"
         android:name="com.example.foodplanner.ui.home.profile.view.profile"
@@ -49,20 +53,49 @@
         android:id="@+id/allcategories"
         android:name="com.example.foodplanner.ui.home.home.view.categorries.allcategories"
         android:label="fragment_allcategories"
-        tools:layout="@layout/fragment_allcategories" />
+        tools:layout="@layout/fragment_allcategories" >
+        <action
+            android:id="@+id/action_allcategories_to_filterby"
+            app:destination="@id/filterby" />
+    </fragment>
     <fragment
         android:id="@+id/countriesFragment"
         android:name="com.example.foodplanner.ui.home.home.view.Countries.countriesFragment"
         android:label="fragment_countries"
-        tools:layout="@layout/fragment_countries" />
+        tools:layout="@layout/fragment_countries" >
+        <action
+            android:id="@+id/action_countriesFragment_to_filterby"
+            app:destination="@id/filterby" />
+    </fragment>
     <fragment
         android:id="@+id/integredients"
         android:name="com.example.foodplanner.ui.home.home.view.Ingredients.integredients"
         android:label="fragment_integredients"
-        tools:layout="@layout/fragment_integredients" />
+        tools:layout="@layout/fragment_integredients" >
+        <action
+            android:id="@+id/action_integredients_to_filterby"
+            app:destination="@id/filterby" />
+    </fragment>
     <fragment
         android:id="@+id/detialsFragment"
         android:name="com.example.foodplanner.ui.home.home.view.detials.detialsFragment"
         android:label="fragment_detials"
-        tools:layout="@layout/fragment_detials" />
+        tools:layout="@layout/fragment_detials" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterby"
+        android:name="com.example.foodplanner.ui.home.search.view.filterby"
+        android:label="fragment_filterby"
+        tools:layout="@layout/fragment_filterby" >
+        <argument android:name="titleFilter" app:argType="string" />
+        <argument android:name="typeFilter" app:argType="string" />
+        <argument android:name="valueFilter" app:argType="string" />
+        <action
+            android:id="@+id/action_filterby_to_detialsFragment2"
+            app:destination="@id/detialsFragment" />
+    </fragment>
+
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.foodplanner.data.repository.ingredients;
+package com.example.foodplanner.data.repository.home.ingredients;
 
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
 import com.example.foodplanner.data.datasource.remote.home.ingredients.IngredientsDataSource;
