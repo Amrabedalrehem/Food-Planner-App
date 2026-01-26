@@ -2,10 +2,10 @@ package com.example.foodplanner.data.repository.search;
 
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
 import com.example.foodplanner.data.datasource.remote.search.SearchDataSource;
-import com.example.foodplanner.data.models.Category;
-import com.example.foodplanner.data.models.Countries;
-import com.example.foodplanner.data.models.Ingredients;
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Category;
+import com.example.foodplanner.data.models.remote.Countries;
+import com.example.foodplanner.data.models.remote.Ingredients;
+import com.example.foodplanner.data.models.remote.Meal;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.example.foodplanner.ui.home.home.presentation.Categories;
 
 import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
-import com.example.foodplanner.data.models.Category;
+import com.example.foodplanner.data.models.remote.Category;
 import com.example.foodplanner.data.repository.home.categorie.CategoriesRepository;
 
 import java.util.List;

@@ -19,10 +19,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Category;
-import com.example.foodplanner.data.models.Countries;
-import com.example.foodplanner.data.models.Ingredients;
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Category;
+import com.example.foodplanner.data.models.remote.Countries;
+import com.example.foodplanner.data.models.remote.Ingredients;
+import com.example.foodplanner.data.models.remote.Meal;
 import com.example.foodplanner.ui.home.search.presenter.SearchContract;
 import com.example.foodplanner.ui.home.search.presenter.SearchPresenter;
 import com.google.android.material.chip.Chip;
@@ -101,8 +101,6 @@ public class search extends Fragment implements SearchContract.View {
         rvMeals.setAdapter(mealAdapter);
         Log.d(TAG, "setupRecyclerView: RecyclerView configured");
     }
-
-
     private void setupListeners() {
          btnBack.setOnClickListener(v -> {
             if (getActivity() != null) {

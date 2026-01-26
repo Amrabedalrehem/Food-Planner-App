@@ -7,8 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Countries;
-import com.example.foodplanner.ui.home.home.view.homeFragmentDirections;
+import com.example.foodplanner.data.models.remote.Countries;
 
 import java.util.List;
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder> {

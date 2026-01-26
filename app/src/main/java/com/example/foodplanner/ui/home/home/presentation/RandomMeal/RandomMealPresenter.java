@@ -1,6 +1,6 @@
 package com.example.foodplanner.ui.home.home.presentation.RandomMeal;
 
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Meal;
 import com.example.foodplanner.data.repository.meal.MealRepository;
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
 

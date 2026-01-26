@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.example.foodplanner.data.datasource.remote.auth.AuthCallback;
 import com.example.foodplanner.data.repository.auth.AuthRepository;
- import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthPresenter implements AuthContract.Presenter {
 
@@ -92,6 +92,13 @@ public class AuthPresenter implements AuthContract.Presenter {
 
 
         });
+    }
+
+    @Override
+    public void loginAsGuest() {
+        if (view == null) return;
+        authRepository.saveGuestSession();
+        view.navigateToHome();
     }
 
     @Override

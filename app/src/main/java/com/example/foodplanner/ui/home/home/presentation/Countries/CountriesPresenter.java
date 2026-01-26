@@ -1,7 +1,7 @@
 package com.example.foodplanner.ui.home.home.presentation.Countries;
 
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
-import com.example.foodplanner.data.models.Countries;
+import com.example.foodplanner.data.models.remote.Countries;
 import com.example.foodplanner.data.repository.home.countries.CountriesRepository;
 import java.util.List;
 public class CountriesPresenter implements  CountriesContract.Presenter{

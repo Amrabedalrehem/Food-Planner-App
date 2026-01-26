@@ -5,10 +5,10 @@ import com.example.foodplanner.data.datasource.remote.NetworkCallback;
 import com.example.foodplanner.data.datasource.remote.home.catogories.CategoryResponse;
 import com.example.foodplanner.data.datasource.remote.home.countries.CountriesResponse;
 import com.example.foodplanner.data.datasource.remote.home.ingredients.IngredientsResponse;
- import com.example.foodplanner.data.models.Category;
-import com.example.foodplanner.data.models.Countries;
-import com.example.foodplanner.data.models.Ingredients;
-import com.example.foodplanner.data.models.Meal;
+ import com.example.foodplanner.data.models.remote.Category;
+import com.example.foodplanner.data.models.remote.Countries;
+import com.example.foodplanner.data.models.remote.Ingredients;
+import com.example.foodplanner.data.models.remote.Meal;
 import com.example.foodplanner.network.Network;
 
 import java.util.List;

@@ -2,40 +2,81 @@ package com.example.foodplanner.data.repository.auth;
 import android.app.Activity;
 import android.content.Context;
 
+import com.example.foodplanner.data.datasource.local.SharedPrefsDataSource;
 import com.example.foodplanner.data.datasource.remote.auth.AuthCallback;
 import com.example.foodplanner.data.datasource.remote.auth.FirebaseAuthHelper;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthRepository {
-    FirebaseAuthHelper firebaseAuthHelper;
-     public AuthRepository(Context context) {
+    private FirebaseAuthHelper firebaseAuthHelper;
+    private SharedPrefsDataSource sharedPrefsDataSource;
+    public AuthRepository(Context context) {
         firebaseAuthHelper = FirebaseAuthHelper.getInstance(context);
-        }
-
+         sharedPrefsDataSource = new SharedPrefsDataSource(context);
+    }
 
     public void signInWithGoogle(Activity activity, String webClientId, AuthCallback callback) {
-        firebaseAuthHelper.startGoogleSignIn(activity,webClientId, callback);
+        firebaseAuthHelper.startGoogleSignIn(activity, webClientId, new AuthCallback() {
+            @Override
+            public void onSuccess(FirebaseUser user) {
+                 saveSession(user, "google");
+                callback.onSuccess(user);
+            }
+
+            @Override
+            public void onError(String message) {
+                callback.onError(message);
+            }
+        });
     }
 
-    public  void  registerWithEmail(String email, String password, AuthCallback callback)
-    {
-        firebaseAuthHelper.registerWithEmail(email,password,callback);
+    public void registerWithEmail(String email, String password, AuthCallback callback) {
+        firebaseAuthHelper.registerWithEmail(email, password, new AuthCallback() {
+            @Override
+            public void onSuccess(FirebaseUser user) {
+                saveSession(user, "email");
+                callback.onSuccess(user);
+            }
+
+            @Override
+            public void onError(String message) {
+                callback.onError(message);
+            }
+        });
     }
 
- public  void  loginWithEmail(String email, String password, AuthCallback callback)
- {
-     firebaseAuthHelper.loginWithEmail(email,password,callback);
- }
+    public void loginWithEmail(String email, String password, AuthCallback callback) {
+        firebaseAuthHelper.loginWithEmail(email, password, new AuthCallback() {
+            @Override
+            public void onSuccess(FirebaseUser user) {
+                saveSession(user, "email");
+                callback.onSuccess(user);
+            }
 
- public  FirebaseUser  getCurrentUser()
- {
-     return firebaseAuthHelper.getCurrentUser();
- }
+            @Override
+            public void onError(String message) {
+                callback.onError(message);
+            }
+        });
+    }
 
- public  void signOut()
- {
-     firebaseAuthHelper.signOut();
- }
+     private void saveSession(FirebaseUser user, String mode) {
+        sharedPrefsDataSource.setLoggedIn(true);
+        sharedPrefsDataSource.setUserId(user.getUid());
+        sharedPrefsDataSource.setUserMode(mode);
+    }
 
+    public void saveGuestSession() {
+        sharedPrefsDataSource.setLoggedIn(false);
+        sharedPrefsDataSource.setUserMode("guest");
+    }
 
+    public void signOut() {
+        firebaseAuthHelper.signOut();
+        sharedPrefsDataSource.clearAllData();
+     }
+
+    public FirebaseUser getCurrentUser() {
+        return firebaseAuthHelper.getCurrentUser();
+    }
 }

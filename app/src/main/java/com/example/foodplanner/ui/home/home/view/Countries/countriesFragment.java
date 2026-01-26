@@ -16,17 +16,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Countries;
-import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesPresenter;
+import com.example.foodplanner.data.models.remote.Countries;
 import com.example.foodplanner.ui.home.home.presentation.Countries.CountriesContract;
 import com.example.foodplanner.ui.home.home.presentation.Countries.CountriesPresenter;
-import com.example.foodplanner.ui.home.home.view.categorries.AllCategoriesAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Retrofit;
 
 
 public class countriesFragment extends Fragment implements CountriesContract.View {

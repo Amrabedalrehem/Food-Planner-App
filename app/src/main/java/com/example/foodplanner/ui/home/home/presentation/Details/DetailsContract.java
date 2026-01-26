@@ -1,7 +1,6 @@
 package com.example.foodplanner.ui.home.home.presentation.Details;
 
-import com.example.foodplanner.data.models.Countries;
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Meal;
 
 import java.util.List;
 

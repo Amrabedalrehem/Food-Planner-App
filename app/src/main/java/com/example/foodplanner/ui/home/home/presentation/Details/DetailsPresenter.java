@@ -1,7 +1,7 @@
 package com.example.foodplanner.ui.home.home.presentation.Details;
 
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Meal;
 import com.example.foodplanner.data.repository.home.details.DetailsRepository;
 
 import java.util.List;

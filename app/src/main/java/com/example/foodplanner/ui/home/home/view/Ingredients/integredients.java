@@ -1,7 +1,6 @@
 package com.example.foodplanner.ui.home.home.view.Ingredients;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -15,12 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Category;
-import com.example.foodplanner.data.models.Ingredients;
-import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesPresenter;
+import com.example.foodplanner.data.models.remote.Ingredients;
 import com.example.foodplanner.ui.home.home.presentation.Ingredients.IngredientsContract;
 import com.example.foodplanner.ui.home.home.presentation.Ingredients.IngredientsPresenter;
-import com.example.foodplanner.ui.home.home.view.categorries.AllCategoriesAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;

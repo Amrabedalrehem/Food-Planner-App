@@ -1,6 +1,6 @@
 package com.example.foodplanner.data.datasource.remote.home.catogories;
 
-import com.example.foodplanner.data.models.Category;
+import com.example.foodplanner.data.models.remote.Category;
 
 import java.util.List;
 
