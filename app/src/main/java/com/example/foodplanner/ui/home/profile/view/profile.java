@@ -23,8 +23,7 @@ public class profile extends Fragment implements ProfileContract.View {
     private ProfilePresenter presenter;
 
     public profile() {
-        // Required empty public constructor
-    }
+     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,9 +39,7 @@ public class profile extends Fragment implements ProfileContract.View {
         btnLogout = view.findViewById(R.id.btnLogout);
 
          presenter = new ProfilePresenter(this, new AuthRepository(requireContext()));
-
          presenter.loadUserData();
-
          btnLogout.setOnClickListener(v -> presenter.logout());
     }
 

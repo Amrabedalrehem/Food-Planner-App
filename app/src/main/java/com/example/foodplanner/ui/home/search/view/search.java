@@ -101,8 +101,6 @@ public class search extends Fragment implements SearchContract.View {
         rvMeals.setAdapter(mealAdapter);
         Log.d(TAG, "setupRecyclerView: RecyclerView configured");
     }
-
-
     private void setupListeners() {
          btnBack.setOnClickListener(v -> {
             if (getActivity() != null) {

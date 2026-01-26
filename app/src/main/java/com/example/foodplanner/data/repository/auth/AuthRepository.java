@@ -74,7 +74,7 @@ public class AuthRepository {
     public void signOut() {
         firebaseAuthHelper.signOut();
         sharedPrefsDataSource.clearAllData();
-    }
+     }
 
     public FirebaseUser getCurrentUser() {
         return firebaseAuthHelper.getCurrentUser();

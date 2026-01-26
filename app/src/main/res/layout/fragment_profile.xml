@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/titleprofile"
-                        android:text="Google User"
+                        android:text="Guest User"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -91,7 +91,7 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="user@google.com"
+                        android:text="Guest@gmail.com"
                         android:textColor="#757575" />
                 </LinearLayout>
             </LinearLayout>

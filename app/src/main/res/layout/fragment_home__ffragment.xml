@@ -31,7 +31,7 @@
             android:id="@+id/tvUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Google User"
+            android:text="Guest User"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"

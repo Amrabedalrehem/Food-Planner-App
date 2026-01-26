@@ -25,16 +25,19 @@ import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.data.models.remote.Category;
 import com.example.foodplanner.data.models.remote.Meal;
+import com.example.foodplanner.data.repository.auth.AuthRepository;
 import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesContract;
 import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesPresenter;
 import com.example.foodplanner.ui.home.home.presentation.RandomMeal.RandomMealContract;
 import com.example.foodplanner.ui.home.home.presentation.RandomMeal.RandomMealPresenter;
 import com.example.foodplanner.ui.home.home.view.categorries.homeCategoriesAdapter;
+import com.example.foodplanner.ui.home.profile.presenter.ProfileContract;
+import com.example.foodplanner.ui.home.profile.presenter.ProfilePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class homeFragment extends Fragment implements CategoriesContract.View, RandomMealContract.View {
+public class homeFragment extends Fragment implements CategoriesContract.View, RandomMealContract.View , ProfileContract.View  {
     private RecyclerView recyclerView;
     private homeCategoriesAdapter adapter;
     private CategoriesPresenter categoriesPresenter;
@@ -48,9 +51,12 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
     private CardView  rvQAIngredients ;
     private  CardView  rvQACountries;
     private CardView  rvِQACategories;
+    private  TextView tvUser;
     private CardView search_card;
     private LinearLayout card_Details;
     private String Id;
+    private ProfilePresenter presenter;
+
     @Nullable
     @Override
 
@@ -63,6 +69,7 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
         super.onViewCreated(view, savedInstanceState);
         textViewSeeAll = view.findViewById(R.id.tvSeeAll);
         recyclerView = view.findViewById(R.id.rvCategories);
+        tvUser = view.findViewById(R.id.tvUser);
         tvMealDescription = view.findViewById(R.id.tvMealDescription);
         tvMealCountery = view.findViewById(R.id.tvMealCountery);
         tvMealTitle = view.findViewById(R.id.tvMealTitle);
@@ -112,6 +119,8 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
             Navigation.findNavController(v).navigate(action);
 
         });
+        presenter = new ProfilePresenter(this, new AuthRepository(requireContext()));
+        presenter.loadUserData();
 
     }
 
@@ -140,8 +149,6 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.errorplaceholder)
                     .into(imageRandom);
-
-
         }
 
     }
@@ -162,4 +169,15 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
 
     }
 
+    @Override
+    public void displayUserData(String name, String email) {
+        tvUser.setText(name);
+
+
+    }
+
+    @Override
+    public void navigateToLogin() {
+
+    }
 }

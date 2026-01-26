@@ -46,6 +46,8 @@ public class SharedPrefsDataSource {
     }
 
      public void clearAllData() {
+         boolean wasFirstLaunch = isFirstLaunch();
         service.clear();
+         setFirstLaunch(wasFirstLaunch);
     }
 }

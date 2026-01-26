@@ -29,7 +29,7 @@ public class SharedPrefsService {
     }
 
      public void clear() {
-        editor.clear();
-        editor.apply();
+          editor.clear();
+          editor.apply();
     }
 }
