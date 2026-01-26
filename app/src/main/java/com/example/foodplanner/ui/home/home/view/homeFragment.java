@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Category;
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Category;
+import com.example.foodplanner.data.models.remote.Meal;
 import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesContract;
 import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesPresenter;
 import com.example.foodplanner.ui.home.home.presentation.RandomMeal.RandomMealContract;

@@ -1,4 +1,4 @@
-package com.example.foodplanner.data.models;
+package com.example.foodplanner.data.models.remote;
 
 import com.google.gson.annotations.SerializedName;
 

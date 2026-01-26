@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Category;
+import com.example.foodplanner.data.models.remote.Category;
 import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesContract;
 import com.example.foodplanner.ui.home.home.presentation.Categories.CategoriesPresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

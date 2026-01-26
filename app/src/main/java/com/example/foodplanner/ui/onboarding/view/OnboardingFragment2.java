@@ -1,4 +1,4 @@
-package com.example.foodplanner.ui.onboarding;
+package com.example.foodplanner.ui.onboarding.view;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.foodplanner.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link OnboardingFragment4#newInstance} factory method to
+ * Use the {@link OnboardingFragment2#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OnboardingFragment4 extends Fragment {
+public class OnboardingFragment2 extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class OnboardingFragment4 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OnboardingFragment4() {
+    public OnboardingFragment2() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class OnboardingFragment4 extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OnboardingFragment4.
+     * @return A new instance of fragment OnboardingFragment2.
      */
     // TODO: Rename and change types and number of parameters
-    public static OnboardingFragment4 newInstance(String param1, String param2) {
-        OnboardingFragment4 fragment = new OnboardingFragment4();
+    public static OnboardingFragment2 newInstance(String param1, String param2) {
+        OnboardingFragment2 fragment = new OnboardingFragment2();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class OnboardingFragment4 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_onboarding4, container, false);
+        return inflater.inflate(R.layout.fragment_onboarding2, container, false);
     }
 }

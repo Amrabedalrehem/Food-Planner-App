@@ -1,7 +1,6 @@
 package com.example.foodplanner.data.datasource.remote.home.ingredients;
 
-import com.example.foodplanner.data.models.Countries;
-import com.example.foodplanner.data.models.Ingredients;
+import com.example.foodplanner.data.models.remote.Ingredients;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

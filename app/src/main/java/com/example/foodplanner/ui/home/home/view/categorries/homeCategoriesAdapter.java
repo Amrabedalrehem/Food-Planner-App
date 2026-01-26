@@ -1,19 +1,17 @@
 package com.example.foodplanner.ui.home.home.view.categorries;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.Category;
+import com.example.foodplanner.data.models.remote.Category;
 import com.example.foodplanner.ui.home.home.view.homeFragmentDirections;
 
 import java.util.List;

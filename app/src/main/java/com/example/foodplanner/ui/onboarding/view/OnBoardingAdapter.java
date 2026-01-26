@@ -1,11 +1,10 @@
-package com.example.foodplanner.ui.onboarding;
+package com.example.foodplanner.ui.onboarding.view;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 public class OnBoardingAdapter extends FragmentStateAdapter {

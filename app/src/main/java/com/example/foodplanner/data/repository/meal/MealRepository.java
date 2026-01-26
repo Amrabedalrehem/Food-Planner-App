@@ -1,7 +1,7 @@
 package com.example.foodplanner.data.repository.meal;
 
 import com.example.foodplanner.data.datasource.remote.home.meal.MealRemoteDataSource;
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Meal;
 import com.example.foodplanner.data.datasource.remote.NetworkCallback;
 
 public class MealRepository {

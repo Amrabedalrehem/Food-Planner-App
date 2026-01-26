@@ -18,6 +18,7 @@ public interface AuthContract {
         void signInWithGoogle(Activity activity, String webClientId);
         void registerWithEmailAndPassword(String email, String password);
         void loginWithEmailAndPassword(String email, String password);
+         void loginAsGuest();
         void detachView();
     }
 }

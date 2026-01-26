@@ -1,15 +1,16 @@
 package com.example.foodplanner.ui.auth.view;
- import android.os.Bundle;
- import android.widget.TextView;
- import android.widget.Toast;
- import androidx.annotation.NonNull;
- import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.foodplanner.R;
- import com.example.foodplanner.ui.auth.presenter.AuthContract;
- import com.example.foodplanner.ui.auth.presenter.AuthPresenter;
- import com.example.foodplanner.data.repository.auth.AuthRepository;
+import com.example.foodplanner.ui.auth.presenter.AuthContract;
+import com.example.foodplanner.ui.auth.presenter.AuthPresenter;
+import com.example.foodplanner.data.repository.auth.AuthRepository;
+import com.example.foodplanner.ui.home.HomeActivity;
 
- 
 
 public class AuthenticationActivity extends AppCompatActivity implements AuthContract.View {
 
@@ -24,12 +25,12 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthCon
         textTitle = findViewById(R.id.textTitle);
         textSubTitle = findViewById(R.id.textSubTitle);
 
-         presenter = new AuthPresenter(this, new AuthRepository(this));
+        presenter = new AuthPresenter(this, new AuthRepository(this));
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, new SignInFragment())
-                .commit();
+                    .replace(R.id.fragmentContainerView, new SignInFragment())
+                    .commit();
         }
 
         findViewById(R.id.btnGoogle).setOnClickListener(v ->
@@ -51,19 +52,22 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthCon
 
     @Override
     public void navigateToHome() {
-        Toast.makeText(this, "Go to HomeActivity", Toast.LENGTH_SHORT).show();
-    }
+        Intent intent = new Intent(AuthenticationActivity.this, HomeActivity.class);
+        startActivity(intent);
+
+         finish();    }
     @Override
     public void openSignUp() {
         if(textTitle != null && textSubTitle != null) {
             textTitle.setText("Create Account");
             textSubTitle.setText("Sign up to start planning meals");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerView, new SignupFragment())
+                    .addToBackStack(null)
+                    .commit();
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, new SignupFragment())
-                .addToBackStack(null)
-                .commit();
+
     }
 
     @Override
@@ -71,11 +75,11 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthCon
         if(textTitle != null && textSubTitle != null) {
             textTitle.setText("Welcome Back");
             textSubTitle.setText("Sign in to continue");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerView, new SignInFragment())
+                    .commit();
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, new SignInFragment())
-                .commit();
     }
 
 
@@ -95,7 +99,7 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthCon
         super.onDestroy();
     }
 
-     public void onLoginClicked(String email, String password) {
+    public void onLoginClicked(String email, String password) {
         presenter.loginWithEmailAndPassword(email, password);
     }
 

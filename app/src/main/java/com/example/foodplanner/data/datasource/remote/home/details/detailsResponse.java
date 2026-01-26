@@ -1,6 +1,6 @@
 package com.example.foodplanner.data.datasource.remote.home.details;
 
-import com.example.foodplanner.data.models.Meal;
+import com.example.foodplanner.data.models.remote.Meal;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

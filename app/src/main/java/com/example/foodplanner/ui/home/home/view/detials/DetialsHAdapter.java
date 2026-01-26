@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
-import com.example.foodplanner.data.models.IngredientItem;
+import com.example.foodplanner.data.models.remote.IngredientItem;
 import java.util.List;
 
 public class DetialsHAdapter extends RecyclerView.Adapter<DetialsHAdapter.ViewHolder> {

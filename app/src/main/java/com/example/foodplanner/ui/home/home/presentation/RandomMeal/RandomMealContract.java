@@ -1,6 +1,5 @@
 package com.example.foodplanner.ui.home.home.presentation.RandomMeal;
- import com.example.foodplanner.data.models.Meal;
-import java.util.List;
+ import com.example.foodplanner.data.models.remote.Meal;
 
 public class RandomMealContract {
     public interface View {
