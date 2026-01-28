@@ -1,0 +1,34 @@
+package com.hammi.foodplanner.data.repository.home.details;
+
+import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
+import com.hammi.foodplanner.data.datasource.remote.home.details.detailsDataSource;
+import com.hammi.foodplanner.data.models.remote.Meal;
+
+import java.util.List;
+
+
+public class DetailsRepository
+ {
+private static DetailsRepository detailsRepository;
+     detailsDataSource dataSource;
+private   DetailsRepository()
+{
+    dataSource =detailsDataSource.getInstance();
+}
+public  static synchronized  DetailsRepository getInstance()
+{
+    if(detailsRepository ==null)
+    {
+        detailsRepository = new DetailsRepository();
+    }
+    return detailsRepository;
+}
+
+public void getDetails(String id, NetworkCallback<List<Meal>> callback)
+{
+    dataSource.getDetails(id,callback);
+
+
+}
+
+}

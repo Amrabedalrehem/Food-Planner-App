@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.favorites.view.favorites">
+    android:background="#FFF5EE">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+     <TextView
+        android:id="@+id/headerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FB5600"
+        android:padding="16dp"
+        android:text="Favorites"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favoritesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@id/headerText"
+        android:padding="8dp"
+        android:visibility="gone" />
 
-</FrameLayout>
+     <TextView
+        android:id="@+id/emptyStateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No favorites yet!"
+        android:textSize="18sp"
+        android:textColor="#999"
+        android:gravity="center"
+        android:visibility="gone" />
+
+     <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>
