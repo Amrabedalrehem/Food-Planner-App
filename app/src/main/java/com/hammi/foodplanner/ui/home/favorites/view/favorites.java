@@ -11,11 +11,15 @@ import com.hammi.foodplanner.R;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.ui.home.favorites.presenter.FavoritesContract;
 import com.hammi.foodplanner.ui.home.favorites.presenter.FavoritesPresenter;
+import com.hammi.foodplanner.ui.home.home.view.categorries.allcategoriesDirections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +47,10 @@ public class favorites extends Fragment implements FavoritesContract.View {
          adapter = new FavoritesAdapter(new ArrayList<>(), new FavoritesAdapter.OnItemClickListener() {
              @Override
              public void onItemClick(MealEntity meal) {
-                 Toast.makeText(getContext(), "Clicked: " + meal.getName(), Toast.LENGTH_SHORT).show();
+
+                 favoritesDirections.ActionFavoritesToLocalDetailsFragment actionFavoritesToLocalDetailsFragment  =
+                         favoritesDirections.actionFavoritesToLocalDetailsFragment(meal.getMealId());
+                 Navigation.findNavController(view).navigate(actionFavoritesToLocalDetailsFragment);
              }
 
              @Override

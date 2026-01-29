@@ -34,7 +34,7 @@ public class SearchDataSource {
     }
 
 
-    public void searchMealsByName(String query, NetworkCallback<List<Meal>> callback) {
+    public void searchMealsByName  (String query, NetworkCallback<List<Meal>> callback) {
         mealService.searchMealByName(query).enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {

@@ -117,10 +117,10 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     @Override
     public void updateFavoriteButton(boolean isFavorite) {
         if (isFavorite) {
-             btnFavorite.setImageResource(R.drawable.iconheart);
+             btnFavorite.setImageResource(R.drawable.save);
              btnFavorite.setImageTintList(null);
         } else {
-             btnFavorite.setImageResource(R.drawable.save);
+             btnFavorite.setImageResource(R.drawable.iconheart);
              btnFavorite.setImageTintList(null);
         }
     }

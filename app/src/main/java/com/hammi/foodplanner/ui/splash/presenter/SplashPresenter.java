@@ -17,12 +17,14 @@ public class SplashPresenter implements SplashContract.Presenter {
     public void checkUserStatus() {
          SplashContract.View currentView = view;
         if (currentView == null) return;
-
         if (repository.checkFirstLaunch()) {
             currentView.navigateToOnboarding();
-        } else if (!repository.checkLoggedIn()) {
+        }
+        else if (!repository.checkLoggedIn()) {
             currentView.navigateToAuthentication();
-        } else {
+        }
+        else
+        {
             currentView.navigateToHome();
         }
     }

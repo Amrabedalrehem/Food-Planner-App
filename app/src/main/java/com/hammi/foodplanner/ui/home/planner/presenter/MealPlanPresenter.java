@@ -35,7 +35,10 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
         long startOfDay = dayRange[0];
         long endOfDay = dayRange[1];
 
-        disposables.add(repository.getMealsForDate(startOfDay, endOfDay).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        disposables.add(repository.getMealsForDate(startOfDay, endOfDay)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                                 this::handleMealsLoaded,
                                 this::handleError
                         )
@@ -45,7 +48,6 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     private void handleMealsLoaded(List<MealEntity> meals) {
         if (view != null) {
             view.hideLoading();
-
             if (meals.isEmpty()) {
                 view.showEmptyState();
             } else {
@@ -57,7 +59,6 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     @Override
     public void loadMealPlanEntriesForDate(int year, int month, int day) {
         if (view == null) return;
-
         long[] dayRange = getDayRange(year, month, day);
         long startOfDay = dayRange[0];
         long endOfDay = dayRange[1];
@@ -89,8 +90,7 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
                                 () -> {
                                     if (view != null) {
                                         view.showMealAddedSuccess();
-                                        // Reload data
-                                        loadMealsForDate(year, month, day);
+                                         loadMealsForDate(year, month, day);
                                     }
                                 },
                                 this::handleError

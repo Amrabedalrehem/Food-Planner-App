@@ -25,9 +25,9 @@ public class FavoritesPresenter implements FavoritesContract.Presenter {
         if (view == null) return;
         view.showLoading();
         disposables.add(repository.getAllFavorites()
-                         .subscribeOn(Schedulers.io())
-                          .observeOn(AndroidSchedulers
-                                  .mainThread()).subscribe(this::handleFavoritesLoaded, this::handleError)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleFavoritesLoaded, this::handleError)
         );
     }
     private void handleFavoritesLoaded(List<MealEntity> favorites) {
@@ -44,7 +44,10 @@ public class FavoritesPresenter implements FavoritesContract.Presenter {
     @Override
     public void removeFavorite(String mealId) {
         disposables.add(
-                repository.removeFromFavorites(mealId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+                repository.removeFromFavorites(mealId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> {
                                     if (view != null) {
                                         view.showMealRemovedSuccess();
                                     }

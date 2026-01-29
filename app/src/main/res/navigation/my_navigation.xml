@@ -32,7 +32,11 @@
         android:id="@+id/planner"
         android:name="com.hammi.foodplanner.ui.home.planner.view.planner"
         android:label="fragment_planner"
-        tools:layout="@layout/fragment_planner" />
+        tools:layout="@layout/fragment_planner" >
+        <action
+            android:id="@+id/action_planner_to_localDetailsFragment"
+            app:destination="@id/localDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/search3"
         android:name="com.hammi.foodplanner.ui.home.search.view.search"
@@ -51,7 +55,11 @@
         android:id="@+id/favorites"
         android:name="com.hammi.foodplanner.ui.home.favorites.view.favorites"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favorites_to_localDetailsFragment"
+            app:destination="@id/localDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/allcategories"
         android:name="com.hammi.foodplanner.ui.home.home.view.categorries.allcategories"
@@ -99,6 +107,15 @@
         <action
             android:id="@+id/action_filterby_to_detialsFragment2"
             app:destination="@id/detialsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/localDetailsFragment"
+        android:name="com.hammi.foodplanner.ui.home.localmeal.view.LocalDetailsFragment"
+        android:label="fragment_local_details"
+        tools:layout="@layout/fragment_local_details" >
+        <argument
+            android:name="mealId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

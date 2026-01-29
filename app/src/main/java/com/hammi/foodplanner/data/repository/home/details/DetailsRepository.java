@@ -1,7 +1,7 @@
 package com.hammi.foodplanner.data.repository.home.details;
 import android.content.Context;
 
-import com.hammi.foodplanner.data.datasource.MealMapper;
+import com.hammi.foodplanner.data.datasource.local.meal.MealMapper;
 import com.hammi.foodplanner.data.datasource.local.favourite.FavoritesLocalDataSource;
 import com.hammi.foodplanner.data.datasource.local.mealplan.MealPlanLocalDataSource;
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;

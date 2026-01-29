@@ -11,12 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.data.models.local.MealPlanEntity;
+import com.hammi.foodplanner.ui.home.favorites.view.favoritesDirections;
 import com.hammi.foodplanner.ui.home.planner.presenter.MealPlanContract;
 import com.hammi.foodplanner.ui.home.planner.presenter.MealPlanPresenter;
 
@@ -66,8 +68,6 @@ public class planner extends Fragment implements MealPlanContract.View {
             selectedYear = year;
             selectedMonth = month;
             selectedDay = dayOfMonth;
-
-            // Load meals for selected date
             presenter.loadMealsForDate(year, month, dayOfMonth);
             presenter.loadMealPlanEntriesForDate(year, month, dayOfMonth);
         });
@@ -80,9 +80,9 @@ public class planner extends Fragment implements MealPlanContract.View {
                 new MealPlanAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(MealEntity meal) {
-                         Toast.makeText(getContext(),
-                                "Clicked: " + meal.getName(),
-                                Toast.LENGTH_SHORT).show();
+                        plannerDirections.ActionPlannerToLocalDetailsFragment   action  =
+                                plannerDirections.actionPlannerToLocalDetailsFragment(meal.getMealId());
+                        Navigation.findNavController(getView()).navigate(action);
                     }
 
                     @Override
