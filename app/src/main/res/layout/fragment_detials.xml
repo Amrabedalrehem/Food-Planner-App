@@ -31,9 +31,9 @@ tools:context=".ui.home.home.view.detials.detialsFragment">
         android:background="@drawable/ovelndetials"
         android:padding="12dp"
         android:src="@drawable/back"
-        android:tint="@color/black"
         android:contentDescription="Back"
-        android:elevation="4dp" />
+        android:elevation="4dp"
+        app:tint="@color/black" />
 
     <ImageButton
         android:id="@+id/btnFavorite"
@@ -41,11 +41,11 @@ tools:context=".ui.home.home.view.detials.detialsFragment">
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        android:background="@drawable/ovelndetials"
+        android:elevation="4dp"
         android:padding="12dp"
-        android:src="@drawable/save"
-        android:contentDescription="Add to favorites"
-        android:elevation="4dp" />
+        android:scaleType="centerInside"
+        android:background="@drawable/ovelndetials"
+        android:src="@drawable/save" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnWatchVideo"

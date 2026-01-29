@@ -1,0 +1,40 @@
+package com.hammi.foodplanner.ui.home.home.presentation.Categories;
+
+import com.hammi.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
+import com.hammi.foodplanner.data.models.remote.Category;
+import com.hammi.foodplanner.data.repository.home.categorie.CategoriesRepository;
+
+import java.util.List;
+
+public class CategoriesPresenter  implements  CategoriesContract.Presenter {
+    public CategoriesContract.View view;
+    public CategoriesRepository categoriesRepository;
+
+    public CategoriesPresenter(CategoriesContract.View view) {
+        categoriesRepository = CategoriesRepository.getInstance();
+        this.view = view;
+    }
+
+    @Override
+    public void getCategories() {
+        if (view == null) return;
+        view.showLoading();
+        categoriesRepository.getAllCategories(new CategoryCallback() {
+            @Override
+            public void onSuccess(List<Category> categoryList) {
+                if (view != null) {
+                    view.hideLoading();
+                    view.showCategories(categoryList);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                if (view != null) {
+                    view.hideLoading();
+                    view.showError(errorMessage);
+                }
+            }
+        });
+    }
+}
