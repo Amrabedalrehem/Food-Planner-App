@@ -36,33 +36,25 @@ public class favorites extends Fragment implements FavoritesContract.View {
      @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews(view);
-        presenter = new FavoritesPresenter(this, getContext());
-        setupRecyclerView();
-        presenter.loadFavorites();
-    }
-
-    private void initViews(View view) {
-        recyclerView = view.findViewById(R.id.favoritesRecyclerView);
-        progressBar = view.findViewById(R.id.progressBar);
-        emptyStateText = view.findViewById(R.id.emptyStateText);
-    }
-
-    private void setupRecyclerView() {
+         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
+         progressBar = view.findViewById(R.id.progressBar);
+         emptyStateText = view.findViewById(R.id.emptyStateText);
+         presenter = new FavoritesPresenter(this, getContext());
          adapter = new FavoritesAdapter(new ArrayList<>(), new FavoritesAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(MealEntity meal) {
-                Toast.makeText(getContext(), "Clicked: " + meal.getName(), Toast.LENGTH_SHORT).show();
-            }
+             @Override
+             public void onItemClick(MealEntity meal) {
+                 Toast.makeText(getContext(), "Clicked: " + meal.getName(), Toast.LENGTH_SHORT).show();
+             }
 
-            @Override
-            public void onRemoveClick(String mealId) {
-                presenter.removeFavorite(mealId);
-            }
-        });
+             @Override
+             public void onRemoveClick(String mealId) {
+                 presenter.removeFavorite(mealId);
+             }
+         });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+         recyclerView.setAdapter(adapter);
+         presenter.loadFavorites();
     }
 
     @Override

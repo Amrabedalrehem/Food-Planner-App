@@ -61,18 +61,18 @@
                 android:layout_marginTop="2dp" />
 
         </LinearLayout>
-
-         <ImageButton
+        <ImageButton
             android:id="@+id/removeButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/cancel"
-             android:contentDescription="Remove from favorites"
-             app:tint="#F44336" />
-
+            android:contentDescription="Remove from favorites"
+            app:tint="#F44336" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

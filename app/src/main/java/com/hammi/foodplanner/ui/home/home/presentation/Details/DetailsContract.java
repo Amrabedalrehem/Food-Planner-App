@@ -2,20 +2,27 @@ package com.hammi.foodplanner.ui.home.home.presentation.Details;
 
 import com.hammi.foodplanner.data.models.remote.Meal;
 
-import java.util.List;
-
-
-
 public interface DetailsContract {
-    public interface View{
-        void showDetails(List<Meal> details);
+
+    interface View {
+
+        void showDetails(Meal meal);
         void showError(String message);
         void showLoading();
         void hideLoading();
-    }
-    public interface Presenter{
-        void getDetails();
+        void showFavoriteAdded();
+        void showFavoriteRemoved();
+        void updateFavoriteButton(boolean isFavorite);
+        void showAddToPlanDialog();
+        void showMealAddedToPlan();
+        void showMealPlanError(String message);
     }
 
+    interface Presenter {
+        void getDetails(String id);
+        void toggleFavorite();
+        void onAddToPlanClicked();
+        void addMealToPlan(int year, int month, int day);
+        void onDestroy();
+    }
 }
-
