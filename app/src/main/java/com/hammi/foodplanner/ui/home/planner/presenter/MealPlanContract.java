@@ -22,9 +22,7 @@ public interface MealPlanContract {
     interface Presenter {
         void loadMealsForDate(int year, int month, int day);
         void loadMealPlanEntriesForDate(int year, int month, int day);
-        void addMealToPlan(MealEntity meal, int year, int month, int day);
-        void removeMealFromPlan(int planId);
-        void loadWeekMealsCount(long startOfWeek, long endOfWeek);
+        void removeMealFromPlan(int planId, MealPlanEntity planEntity);
         void onDestroy();
     }
 }

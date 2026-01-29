@@ -30,6 +30,8 @@ public class FavoritesPresenter implements FavoritesContract.Presenter {
                 .subscribe(this::handleFavoritesLoaded, this::handleError)
         );
     }
+
+
     private void handleFavoritesLoaded(List<MealEntity> favorites) {
         if (view != null) {
             view.hideLoading();
@@ -42,9 +44,9 @@ public class FavoritesPresenter implements FavoritesContract.Presenter {
     }
 
     @Override
-    public void removeFavorite(String mealId) {
+    public void removeFavorite(MealEntity mail) {
         disposables.add(
-                repository.removeFromFavorites(mealId)
+                repository.removeFromFavorites(mail)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(() -> {

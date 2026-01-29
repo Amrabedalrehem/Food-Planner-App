@@ -2,6 +2,7 @@ package com.hammi.foodplanner.data.datasource.local.meal;
 import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.db.AppDatabase;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class LocalMealDataSource {
@@ -21,5 +22,10 @@ public class LocalMealDataSource {
     }
     public Single<MealEntity> getMealById(String mealId) {
         return mealDao.getMealById(mealId);
+    }
+
+    public Completable insertMeal(MealEntity meal) {
+
+        return mealDao.insertMeal(meal);
     }
 }

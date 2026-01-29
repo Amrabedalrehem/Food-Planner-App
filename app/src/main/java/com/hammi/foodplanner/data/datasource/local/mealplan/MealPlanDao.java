@@ -4,11 +4,14 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.hammi.foodplanner.data.models.local.FavoriteEntity;
 import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.data.models.local.MealPlanEntity;
 import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface MealPlanDao {
@@ -46,4 +49,8 @@ public interface MealPlanDao {
     Completable clearDayPlan(long startOfDay, long endOfDay);
     @Query("DELETE FROM meal_plan")
     Completable clearAllPlans();
-}
+
+    @Query("SELECT * FROM meal_plan")
+    Single<List<MealPlanEntity>> getAllMealPlansOnce();
+
+ }

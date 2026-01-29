@@ -15,7 +15,7 @@ public interface FavoritesContract {
 
     interface Presenter {
         void loadFavorites();
-        void removeFavorite(String mealId);
+        void removeFavorite(MealEntity meal);
         void onDestroy();
     }
 }

@@ -20,7 +20,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     public interface OnItemClickListener {
         void onItemClick(MealEntity meal);
-        void onRemoveClick(String mealId);
+        void onRemoveClick(MealEntity meal);
     }
 
     public FavoritesAdapter(List<MealEntity> meals, OnItemClickListener listener) {
@@ -81,7 +81,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                     .into(mealImage);
 
              itemView.setOnClickListener(v -> listener.onItemClick(meal));
-            removeButton.setOnClickListener(v -> listener.onRemoveClick(meal.getMealId()));
+            removeButton.setOnClickListener(v -> listener.onRemoveClick(meal));
         }
     }
 }

@@ -14,7 +14,6 @@ public class AuthRepository {
         firebaseAuthHelper = FirebaseAuthHelper.getInstance(context);
          sharedPrefsDataSource = new SharedPrefsDataSource(context);
     }
-
     public void signInWithGoogle(Activity activity, String webClientId, AuthCallback callback) {
         firebaseAuthHelper.startGoogleSignIn(activity, webClientId, new AuthCallback() {
             @Override

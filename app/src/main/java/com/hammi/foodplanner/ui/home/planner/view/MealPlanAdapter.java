@@ -25,7 +25,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
 
     public interface OnItemClickListener {
         void onItemClick(MealEntity meal);
-        void onDeleteClick(int planId);
+        void onDeleteClick(int planId, MealPlanEntity planEntity);
     }
 
     public MealPlanAdapter(List<MealEntity> meals,
@@ -48,16 +48,29 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MealEntity meal = meals.get(position);
 
-         int planId = (position < planEntries.size())
-                ? planEntries.get(position).getId()
-                : -1;
+         MealPlanEntity planEntry = findPlanEntryByMealId(meal.getMealId(), position);
 
-        holder.bind(meal, planId, listener);
+        holder.bind(meal, planEntry, listener);
     }
 
     @Override
     public int getItemCount() {
         return meals.size();
+    }
+
+     private MealPlanEntity findPlanEntryByMealId(String mealId, int position) {
+         if (position < planEntries.size() &&
+                planEntries.get(position).getMealId().equals(mealId)) {
+            return planEntries.get(position);
+        }
+
+         for (MealPlanEntity entry : planEntries) {
+            if (entry.getMealId().equals(mealId)) {
+                return entry;
+            }
+        }
+
+        return null;
     }
 
     public void updateMeals(List<MealEntity> newMeals) {
@@ -85,21 +98,22 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
             deleteButton = itemView.findViewById(R.id.btnDeletePlan);
         }
 
-        public void bind(MealEntity meal, int planId, OnItemClickListener listener) {
+        public void bind(MealEntity meal, MealPlanEntity planEntry, OnItemClickListener listener) {
             mealTitle.setText(meal.getName());
             mealType.setText(meal.getCategory());
 
-             Glide.with(itemView.getContext())
+            Glide.with(itemView.getContext())
                     .load(meal.getThumbnailUrl())
                     .transform(new RoundedCorners(30))
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.errorplaceholder)
                     .into(mealImage);
 
-             itemView.setOnClickListener(v -> listener.onItemClick(meal));
+            itemView.setOnClickListener(v -> listener.onItemClick(meal));
+
             deleteButton.setOnClickListener(v -> {
-                if (planId != -1) {
-                    listener.onDeleteClick(planId);
+                if (planEntry != null) {
+                    listener.onDeleteClick(planEntry.getId(), planEntry);
                 }
             });
         }
