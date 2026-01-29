@@ -59,7 +59,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(isFavorite -> {
                                     if (isFavorite) {
-                                        removeFavorite(currentMeal.getIdMeal());
+                                        removeFavorite(currentMeal);
                                     } else {
                                         addFavorite(currentMeal);
                                     }
@@ -88,8 +88,8 @@ public class DetailsPresenter implements DetailsContract.Presenter {
                                     }}));
     }
 
-    private void removeFavorite(String mealId) {
-        disposables.add(repository.removeFromFavorites(mealId).
+    private void removeFavorite(Meal meal) {
+        disposables.add(repository.removeFromFavorites(meal).
                 subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                         .subscribe(() -> {if (view != null) {
                                         view.showFavoriteRemoved();
@@ -130,7 +130,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
         if (currentMeal == null) return;
         long timestamp = getDateTimestamp(year, month, day);
         disposables.add(
-                repository.addMealToPlan(currentMeal, timestamp)
+                repository.addMealToPlan(currentMeal)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(() -> {

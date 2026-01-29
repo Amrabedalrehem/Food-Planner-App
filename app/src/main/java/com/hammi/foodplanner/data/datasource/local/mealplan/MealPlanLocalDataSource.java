@@ -1,5 +1,6 @@
 package com.hammi.foodplanner.data.datasource.local.mealplan;
 import com.hammi.foodplanner.data.datasource.local.meal.MealDao;
+import com.hammi.foodplanner.data.models.local.FavoriteEntity;
 import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.data.models.local.MealPlanEntity;
 import com.hammi.foodplanner.db.AppDatabase;
@@ -12,7 +13,6 @@ import io.reactivex.rxjava3.core.Flowable;
 public class MealPlanLocalDataSource {
 
     private static MealPlanLocalDataSource instance;
-
     private final MealDao mealDao;
     private final MealPlanDao mealPlanDao;
 
@@ -54,4 +54,9 @@ public class MealPlanLocalDataSource {
     public Flowable<Integer> getWeekMealsCount(long startOfWeek, long endOfWeek) {
         return mealPlanDao.getWeekMealsCount(startOfWeek, endOfWeek);
     }
+
+    public Completable insertAllMealPlans(List<MealPlanEntity> mealPlans) {
+        return mealPlanDao.addMealsToPlan(mealPlans);
+    }
+
 }

@@ -32,4 +32,11 @@ public interface FavoriteDao {
 
     @Query("DELETE FROM favorites")
     Completable clearAllFavorites();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+     Completable insertAllFavorites(List<FavoriteEntity> favorites);
+
+    @Query("SELECT * FROM favorites")
+    Single<List<FavoriteEntity>> getAllFavoritesOnce();
+
 }

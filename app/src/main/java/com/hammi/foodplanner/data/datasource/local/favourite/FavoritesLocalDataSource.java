@@ -31,6 +31,7 @@ public class FavoritesLocalDataSource {
         return mealDao.insertMeal(meal).andThen(favoriteDao.addFavorite(new FavoriteEntity(meal.getMealId(), System.currentTimeMillis())));
     }
 
+
     public Completable removeFromFavorites(String mealId) {
         return favoriteDao.removeFavorite(mealId);
     }
@@ -42,5 +43,8 @@ public class FavoritesLocalDataSource {
     public Single<Boolean> isFavorite(String mealId) {
         return favoriteDao.isFavorite(mealId)
                 .map(count -> count > 0);
+    }
+    public Completable insertAllFavorites(List<FavoriteEntity> favorites) {
+        return favoriteDao.insertAllFavorites(favorites);
     }
 }

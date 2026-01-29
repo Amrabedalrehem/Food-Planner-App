@@ -34,4 +34,7 @@ public interface MealDao {
 
     @Query("DELETE FROM meals")
     Completable deleteAllMeals();
+
+    @Query("SELECT * FROM meals")
+    Single<List<MealEntity>> getAllMealsOnce();
 }

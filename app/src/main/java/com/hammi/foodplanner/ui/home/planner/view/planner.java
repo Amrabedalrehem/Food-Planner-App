@@ -80,19 +80,20 @@ public class planner extends Fragment implements MealPlanContract.View {
                 new MealPlanAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(MealEntity meal) {
-                        plannerDirections.ActionPlannerToLocalDetailsFragment   action  =
+                        plannerDirections.ActionPlannerToLocalDetailsFragment action =
                                 plannerDirections.actionPlannerToLocalDetailsFragment(meal.getMealId());
                         Navigation.findNavController(getView()).navigate(action);
                     }
 
                     @Override
-                    public void onDeleteClick(int planId) {
-                         presenter.removeMealFromPlan(planId);
-                         presenter.loadMealsForDate(selectedYear, selectedMonth, selectedDay);
+                    public void onDeleteClick(int planId, MealPlanEntity planEntity) {
+                        presenter.removeMealFromPlan(planId, planEntity);
+                        presenter.loadMealsForDate(selectedYear, selectedMonth, selectedDay);
                         presenter.loadMealPlanEntriesForDate(selectedYear, selectedMonth, selectedDay);
                     }
                 }
         );
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

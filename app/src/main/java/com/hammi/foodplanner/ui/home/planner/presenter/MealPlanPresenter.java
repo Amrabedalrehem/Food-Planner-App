@@ -3,6 +3,7 @@ package com.hammi.foodplanner.ui.home.planner.presenter;
 import android.content.Context;
 
 import com.hammi.foodplanner.data.models.local.MealEntity;
+import com.hammi.foodplanner.data.models.local.MealPlanEntity;
 import com.hammi.foodplanner.data.repository.local.mealplan.MealPlanRepository;
 
 import java.util.Calendar;
@@ -24,8 +25,6 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
         this.disposables = new CompositeDisposable();
     }
 
-
-
     @Override
     public void loadMealsForDate(int year, int month, int day) {
         if (view == null) return;
@@ -35,10 +34,11 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
         long startOfDay = dayRange[0];
         long endOfDay = dayRange[1];
 
-        disposables.add(repository.getMealsForDate(startOfDay, endOfDay)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
+        disposables.add(
+                repository.getMealsForDate(startOfDay, endOfDay)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
                                 this::handleMealsLoaded,
                                 this::handleError
                         )
@@ -59,6 +59,7 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     @Override
     public void loadMealPlanEntriesForDate(int year, int month, int day) {
         if (view == null) return;
+
         long[] dayRange = getDayRange(year, month, day);
         long startOfDay = dayRange[0];
         long endOfDay = dayRange[1];
@@ -78,54 +79,17 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
         );
     }
 
-    @Override
-    public void addMealToPlan(MealEntity meal, int year, int month, int day) {
-         long dateTimestamp = getDateTimestamp(year, month, day);
-
-        disposables.add(
-                repository.addMealToPlan(meal, dateTimestamp)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                () -> {
-                                    if (view != null) {
-                                        view.showMealAddedSuccess();
-                                         loadMealsForDate(year, month, day);
-                                    }
-                                },
-                                this::handleError
-                        )
-        );
-    }
 
     @Override
-    public void removeMealFromPlan(int planId) {
+    public void removeMealFromPlan(int planId, MealPlanEntity planEntity) {
         disposables.add(
-                repository.removeMealFromPlan(planId)
+                repository.removeMealFromPlan(planId, planEntity)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 () -> {
                                     if (view != null) {
                                         view.showMealRemovedSuccess();
-                                    }
-                                },
-                                this::handleError
-                        )
-        );
-    }
-
-
-    @Override
-    public void loadWeekMealsCount(long startOfWeek, long endOfWeek) {
-        disposables.add(
-                repository.getWeekMealsCount(startOfWeek, endOfWeek)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                count -> {
-                                    if (view != null) {
-                                        view.showWeekMealsCount(count);
                                     }
                                 },
                                 this::handleError
@@ -147,11 +111,9 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
         view = null;
     }
 
-
-
     private long getDateTimestamp(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, 12, 0, 0);  // 12:00 PM
+        calendar.set(year, month, day, 12, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
@@ -159,9 +121,10 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     private long[] getDayRange(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
 
-         calendar.set(year, month, day, 0, 0, 0);
+        calendar.set(year, month, day, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         long startOfDay = calendar.getTimeInMillis();
+
         calendar.set(year, month, day, 23, 59, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         long endOfDay = calendar.getTimeInMillis();

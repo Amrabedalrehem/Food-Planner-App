@@ -54,8 +54,8 @@ public class favorites extends Fragment implements FavoritesContract.View {
              }
 
              @Override
-             public void onRemoveClick(String mealId) {
-                 presenter.removeFavorite(mealId);
+             public void onRemoveClick(MealEntity  meal) {
+                 presenter.removeFavorite(meal);
              }
          });
 
