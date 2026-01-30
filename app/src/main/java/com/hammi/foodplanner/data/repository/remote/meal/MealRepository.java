@@ -1,4 +1,4 @@
-package com.hammi.foodplanner.data.repository.meal;
+package com.hammi.foodplanner.data.repository.remote.meal;
 
 import com.hammi.foodplanner.data.datasource.remote.home.meal.MealRemoteDataSource;
 import com.hammi.foodplanner.data.models.remote.Meal;

@@ -1,6 +1,6 @@
 package com.hammi.foodplanner.ui.home.profile.presenter;
 
-import com.hammi.foodplanner.data.repository.auth.AuthRepository;
+import com.hammi.foodplanner.data.repository.remote.auth.AuthRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProfilePresenter implements ProfileContract.Presenter {

@@ -2,7 +2,7 @@ package com.hammi.foodplanner.ui.home.home.presentation.Categories;
 
 import com.hammi.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
 import com.hammi.foodplanner.data.models.remote.Category;
-import com.hammi.foodplanner.data.repository.home.categorie.CategoriesRepository;
+import com.hammi.foodplanner.data.repository.remote.home.categorie.CategoriesRepository;
 
 import java.util.List;
 

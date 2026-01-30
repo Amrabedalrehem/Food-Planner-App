@@ -1,7 +1,7 @@
 package com.hammi.foodplanner.ui.home.home.presentation.RandomMeal;
 
 import com.hammi.foodplanner.data.models.remote.Meal;
-import com.hammi.foodplanner.data.repository.meal.MealRepository;
+import com.hammi.foodplanner.data.repository.remote.meal.MealRepository;
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 
 public class RandomMealPresenter implements RandomMealContract.Presenter {

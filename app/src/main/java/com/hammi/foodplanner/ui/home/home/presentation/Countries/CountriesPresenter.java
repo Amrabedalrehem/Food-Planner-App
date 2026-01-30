@@ -2,7 +2,7 @@ package com.hammi.foodplanner.ui.home.home.presentation.Countries;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 import com.hammi.foodplanner.data.models.remote.Countries;
-import com.hammi.foodplanner.data.repository.home.countries.CountriesRepository;
+import com.hammi.foodplanner.data.repository.remote.home.countries.CountriesRepository;
 import java.util.List;
 public class CountriesPresenter implements  CountriesContract.Presenter{
      CountriesRepository countriesRepository;

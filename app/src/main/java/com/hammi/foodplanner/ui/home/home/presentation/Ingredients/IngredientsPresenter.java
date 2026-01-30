@@ -2,7 +2,7 @@ package com.hammi.foodplanner.ui.home.home.presentation.Ingredients;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 import com.hammi.foodplanner.data.models.remote.Ingredients;
-import com.hammi.foodplanner.data.repository.home.ingredients.IngredientsRepository;
+import com.hammi.foodplanner.data.repository.remote.home.ingredients.IngredientsRepository;
 
 import java.util.List;
 

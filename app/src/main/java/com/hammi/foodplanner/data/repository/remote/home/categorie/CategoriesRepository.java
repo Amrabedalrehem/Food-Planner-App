@@ -1,4 +1,4 @@
-package com.hammi.foodplanner.data.repository.home.categorie;
+package com.hammi.foodplanner.data.repository.remote.home.categorie;
 
 import com.hammi.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
 import com.hammi.foodplanner.data.datasource.remote.home.catogories.CategoryDataSource;

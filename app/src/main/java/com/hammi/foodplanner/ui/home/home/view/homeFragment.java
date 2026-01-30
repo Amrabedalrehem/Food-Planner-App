@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.remote.Category;
 import com.hammi.foodplanner.data.models.remote.Meal;
-import com.hammi.foodplanner.data.repository.auth.AuthRepository;
+import com.hammi.foodplanner.data.repository.remote.auth.AuthRepository;
 import com.hammi.foodplanner.ui.home.home.presentation.Categories.CategoriesContract;
 import com.hammi.foodplanner.ui.home.home.presentation.Categories.CategoriesPresenter;
 import com.hammi.foodplanner.ui.home.home.presentation.RandomMeal.RandomMealContract;

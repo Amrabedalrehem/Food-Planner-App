@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 import com.hammi.foodplanner.data.models.remote.Meal;
-import com.hammi.foodplanner.data.repository.home.details.DetailsRepository;
+import com.hammi.foodplanner.data.repository.remote.home.details.DetailsRepository;
 
 import java.util.Calendar;
 import java.util.List;

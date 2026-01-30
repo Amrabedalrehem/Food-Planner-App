@@ -1,4 +1,4 @@
-package com.hammi.foodplanner.data.repository.search;
+package com.hammi.foodplanner.data.repository.remote.search;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 import com.hammi.foodplanner.data.datasource.remote.search.SearchDataSource;

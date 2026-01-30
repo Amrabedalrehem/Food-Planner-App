@@ -1,4 +1,4 @@
-package com.hammi.foodplanner.data.repository.home.ingredients;
+package com.hammi.foodplanner.data.repository.remote.home.ingredients;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 import com.hammi.foodplanner.data.datasource.remote.home.ingredients.IngredientsDataSource;

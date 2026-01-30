@@ -1,4 +1,4 @@
-package com.hammi.foodplanner.data.repository.home.countries;
+package com.hammi.foodplanner.data.repository.remote.home.countries;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 import com.hammi.foodplanner.data.datasource.remote.home.countries.CountriesDataSource;

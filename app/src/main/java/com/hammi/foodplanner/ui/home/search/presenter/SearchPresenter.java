@@ -5,7 +5,7 @@ import com.hammi.foodplanner.data.models.remote.Category;
 import com.hammi.foodplanner.data.models.remote.Countries;
 import com.hammi.foodplanner.data.models.remote.Ingredients;
 import com.hammi.foodplanner.data.models.remote.Meal;
-import com.hammi.foodplanner.data.repository.search.SearchRepository;
+import com.hammi.foodplanner.data.repository.remote.search.SearchRepository;
 
 import java.util.List;
 
