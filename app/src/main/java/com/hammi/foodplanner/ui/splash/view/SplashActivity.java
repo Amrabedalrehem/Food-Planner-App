@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.ui.auth.view.AuthenticationActivity;
-import com.hammi.foodplanner.ui.home.HomeActivity;
+import com.hammi.foodplanner.ui.main_home.view.HomeActivity;
 import com.hammi.foodplanner.ui.onboarding.view.OnboardingActivity;
 import com.hammi.foodplanner.ui.splash.presenter.SplashContract;
 import com.hammi.foodplanner.ui.splash.presenter.SplashPresenter;

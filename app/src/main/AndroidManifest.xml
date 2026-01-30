@@ -17,7 +17,7 @@
             android:name=".ui.auth.view.AuthenticationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.main_home.view.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.onboarding.view.OnboardingActivity"
