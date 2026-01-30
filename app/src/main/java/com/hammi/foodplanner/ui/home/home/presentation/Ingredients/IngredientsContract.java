@@ -13,5 +13,6 @@ public interface IngredientsContract {
     }
     public interface Presenter{
         void getIngredients();
+       void detachView();
     }
 }

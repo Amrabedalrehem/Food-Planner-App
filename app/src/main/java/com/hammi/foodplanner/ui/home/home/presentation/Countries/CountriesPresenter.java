@@ -1,42 +1,49 @@
 package com.hammi.foodplanner.ui.home.home.presentation.Countries;
 
-import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
-import com.hammi.foodplanner.data.models.remote.Countries;
-import com.hammi.foodplanner.data.repository.home.countries.CountriesRepository;
-import java.util.List;
-public class CountriesPresenter implements  CountriesContract.Presenter{
-     CountriesRepository countriesRepository;
-     CountriesContract.View view;
-   public CountriesPresenter(CountriesContract.View view){
+import com.hammi.foodplanner.data.repository.remote.home.countries.CountriesRepository;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-       countriesRepository  = CountriesRepository.getInstance();
-       this.view =view;
-   }
+public class CountriesPresenter implements CountriesContract.Presenter {
+    private final CountriesRepository countriesRepository;
+    private CountriesContract.View view;
+     private final CompositeDisposable disposable = new CompositeDisposable();
+
+    public CountriesPresenter(CountriesContract.View view) {
+        this.countriesRepository = CountriesRepository.getInstance();
+        this.view = view;
+    }
 
     @Override
     public void getCountries() {
         if (view == null) return;
+
         view.showLoading();
-       countriesRepository.getAllCountries(new NetworkCallback<List<Countries>>() {
 
-           @Override
-           public void onSuccess(List<Countries> data) {
+        disposable.add(
+                countriesRepository.getAllCountries()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                countriesList -> {
+                                    if (view != null) {
+                                        view.hideLoading();
+                                        view.showCountries(countriesList);
+                                    }
+                                },
+                                throwable -> {
+                                    if (view != null) {
+                                        view.hideLoading();
+                                        view.showError(throwable.getMessage());
+                                    }
+                                }
+                        )
+        );
+    }
 
-               if (view != null) {
-                   view.hideLoading();
-                   view.showCountries(data);
-               }
-
-           }
-
-           @Override
-           public void onError(String errorMessage) {
-               if (view != null) {
-                   view.hideLoading();
-                   view.showError(errorMessage);
-               }
-           }
-       });
-
+     public void detachView() {
+        disposable.clear();
+        this.view = null;
     }
 }

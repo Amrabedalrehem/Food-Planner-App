@@ -1,56 +1,29 @@
 package com.hammi.foodplanner.data.datasource.remote.home.ingredients;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.MealService;
-import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
 import com.hammi.foodplanner.data.models.remote.Ingredients;
 import com.hammi.foodplanner.network.Network;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.core.Single;
 
 public class IngredientsDataSource {
-MealService mealService ;
-public  static  IngredientsDataSource ingredientsDataSource;
+    private final MealService mealService;
+    private static IngredientsDataSource ingredientsDataSource;
 
- private   IngredientsDataSource()
-    {
+    private IngredientsDataSource() {
         mealService = Network.getInstance().mealService;
     }
-   public static synchronized IngredientsDataSource getInstance()
-    {
-        if(ingredientsDataSource ==null)
-        {
+
+    public static synchronized IngredientsDataSource getInstance() {
+        if (ingredientsDataSource == null) {
             ingredientsDataSource = new IngredientsDataSource();
-            return ingredientsDataSource;
         }
-        return  ingredientsDataSource;
+        return ingredientsDataSource;
     }
 
-
-
-    public  void  getAllIngredients(NetworkCallback<List<Ingredients>> callback)
-    {
-        mealService.getListAllIngredients("list").enqueue(
-                new Callback<IngredientsResponse>() {
-                    @Override
-                    public void onResponse(Call<IngredientsResponse> call, Response<IngredientsResponse> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-
-                            callback.onSuccess(response.body().getIngredients());
-                        } else {
-                            callback.onError("No meals found or server error");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<IngredientsResponse> call, Throwable t) {
-                        callback.onError("Network error: " + t.getMessage());
-                    }
-                }
-        );
+     public Single<List<Ingredients>> getAllIngredients() {
+         return mealService.getListAllIngredients("list")
+                .map(response -> response.getIngredients());
     }
-
-
 }

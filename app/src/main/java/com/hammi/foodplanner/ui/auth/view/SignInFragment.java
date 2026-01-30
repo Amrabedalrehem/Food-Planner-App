@@ -2,11 +2,9 @@ package com.hammi.foodplanner.ui.auth.view;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +36,6 @@ public class SignInFragment extends Fragment  {
             throw new RuntimeException("Parent activity must implement AuthContract.View");
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,9 +55,14 @@ public class SignInFragment extends Fragment  {
          btnSignIn.setOnClickListener(v -> {
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
-
-            if (email.isEmpty() || password.isEmpty()) {
-                authView.showError("Email and password cannot be empty");
+            if (email.isEmpty()) {
+                emailEditText.setError("Email is required");
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailEditText.setError("Invalid email format");
+            } else if (password.isEmpty()) {
+                passwordEditText.setError("Password is required");
+            } else if (password.length() < 6) {
+                passwordEditText.setError("Password must be at least 6 characters");
             } else {
                 presenter.loginWithEmailAndPassword(email, password);
             }

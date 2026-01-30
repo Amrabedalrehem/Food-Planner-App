@@ -1,12 +1,14 @@
-package com.hammi.foodplanner.data.repository.meal;
+package com.hammi.foodplanner.data.repository.remote.meal;
 
 import com.hammi.foodplanner.data.datasource.remote.home.meal.MealRemoteDataSource;
 import com.hammi.foodplanner.data.models.remote.Meal;
-import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
+
+import java.util.List;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealRepository {
     private static MealRepository mealRepository;
-    private MealRemoteDataSource mealRemoteDataSource;
+    private final MealRemoteDataSource mealRemoteDataSource;
 
     private MealRepository() {
         mealRemoteDataSource = MealRemoteDataSource.getInstance();
@@ -19,9 +21,7 @@ public class MealRepository {
         return mealRepository;
     }
 
-    public void getRandomMael(NetworkCallback<Meal> callback) {
-
-        mealRemoteDataSource.getMeal(callback);
+     public Single<List<Meal>> getRandomMeal() {
+        return mealRemoteDataSource.getRandomMeal();
     }
-
 }

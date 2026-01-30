@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.hammi.foodplanner.R;
-import com.hammi.foodplanner.data.repository.auth.AuthRepository;
+import com.hammi.foodplanner.data.repository.remote.auth.AuthRepository;
 import com.hammi.foodplanner.ui.auth.view.AuthenticationActivity;
 import com.hammi.foodplanner.ui.home.profile.presenter.ProfileContract;
 import com.hammi.foodplanner.ui.home.profile.presenter.ProfilePresenter;

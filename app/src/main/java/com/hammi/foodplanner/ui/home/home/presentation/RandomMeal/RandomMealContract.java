@@ -11,6 +11,7 @@ public class RandomMealContract {
 
     public interface Presenter {
         void getRandomMeal();
+        void  detachView();
     }
 }
 

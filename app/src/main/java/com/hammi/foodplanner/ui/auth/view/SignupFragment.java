@@ -60,11 +60,18 @@ public class SignupFragment extends Fragment {
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
 
-            if(fullName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                authView.showError("Please enter full name, email and password");
+            if (fullName.isEmpty()) {
+                fullNameEditText.setError("Full name is required");
+            } else if (email.isEmpty()) {
+                emailEditText.setError("Email is required");
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailEditText.setError("Invalid email format");
+            } else if (password.length() < 6) {
+                passwordEditText.setError("Password must be at least 6 characters");
             } else {
                 presenter.registerWithEmailAndPassword(email, password);
             }
+
         });
 
          btnSwitchToSignIn.setOnClickListener(v -> {

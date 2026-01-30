@@ -1,45 +1,45 @@
 package com.hammi.foodplanner.data.repository.sharedprefs;
 
 import android.content.Context;
-
 import com.hammi.foodplanner.data.datasource.local.SharedPrefsManager.SharedPrefsDataSource;
-
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 public class SharedPrefsRepository {
 
-    private SharedPrefsDataSource dataSource;
+    private final SharedPrefsDataSource dataSource;
 
     public SharedPrefsRepository(Context context) {
         this.dataSource = new SharedPrefsDataSource(context);
     }
 
-    public boolean checkFirstLaunch() {
+    public Single<Boolean> checkFirstLaunch() {
         return dataSource.isFirstLaunch();
     }
 
-    public void markOnboardingComplete() {
-        dataSource.setFirstLaunch(false);
+    public Completable markOnboardingComplete() {
+        return dataSource.setFirstLaunch(false);
     }
 
-    public boolean checkLoggedIn() {
+    public Single<Boolean> checkLoggedIn() {
         return dataSource.isLoggedIn();
     }
 
-    public void saveLoginSession(String userId, String mode) {
-        dataSource.setLoggedIn(true);
-        dataSource.setUserId(userId);
-        dataSource.setUserMode(mode);
+     public Completable saveLoginSession(String userId, String mode) {
+        return dataSource.setLoggedIn(true)
+                .andThen(dataSource.setUserId(userId))
+                .andThen(dataSource.setUserMode(mode));
     }
 
-    public void logout() {
-        dataSource.clearAllData();
+    public Completable logout() {
+        return dataSource.clearAllData();
     }
 
-    public String getUserMode() {
+    public Single<String> getUserMode() {
         return dataSource.getUserMode();
     }
 
-    public String getUserId() {
+    public Single<String> getUserId() {
         return dataSource.getUserId();
     }
 }

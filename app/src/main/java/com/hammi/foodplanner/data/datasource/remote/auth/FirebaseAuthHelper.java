@@ -4,27 +4,28 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.CancellationSignal;
-import android.os.Handler;
-import android.os.Looper;
-import androidx.annotation.NonNull;
 import androidx.credentials.CredentialManager;
 import androidx.credentials.CredentialManagerCallback;
- import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialRequest;
 import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.GetCredentialException;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import java.util.concurrent.Executors;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleEmitter;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 public class FirebaseAuthHelper {
     private final FirebaseAuth firebaseAuth;
     private final Context context;
     private final CredentialManager credentialManager;
-    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
-    private static  FirebaseAuthHelper instance;
+    private static FirebaseAuthHelper instance;
 
     private FirebaseAuthHelper(Context context) {
         this.context = context.getApplicationContext();
@@ -41,116 +42,104 @@ public class FirebaseAuthHelper {
 
 
     @SuppressLint("NewApi")
-    public void startGoogleSignIn(Activity activity, String webClientId, AuthCallback callback) {
-        if (activity == null || callback == null) return;
-        if (webClientId == null || webClientId.isEmpty()) {
-            callback.onError("Web Client ID is missing");
-            return;
-        }
+    public Single<FirebaseUser> startGoogleSignIn(Activity activity, String webClientId) {
+        return Single.<FirebaseUser>create(emitter -> {
+            if (webClientId == null || webClientId.isEmpty()) {
+                emitter.onError(new Exception("Web Client ID is missing"));
+                return;
+            }
 
-         GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
-                .setFilterByAuthorizedAccounts(false)
-                .setServerClientId(webClientId)
-                .build();
+            GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
+                    .setFilterByAuthorizedAccounts(false)
+                    .setServerClientId(webClientId)
+                    .build();
 
-         GetCredentialRequest request = new GetCredentialRequest.Builder()
-                .addCredentialOption(googleIdOption)
-                .build();
+            GetCredentialRequest request = new GetCredentialRequest.Builder()
+                    .addCredentialOption(googleIdOption)
+                    .build();
 
-         credentialManager.getCredentialAsync(
-                activity,
-                request,
-                new CancellationSignal(),
-                Executors.newSingleThreadExecutor(),
-                new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
-                    @Override
-                    public void onResult(GetCredentialResponse response) {
-                        if (response.getCredential() != null) {
-                            handleGoogleResponse(response.getCredential(), callback);
-                        } else {
-                            mainHandler.post(() -> callback.onError("No credential returned"));
+            credentialManager.getCredentialAsync(
+                    activity,
+                    request,
+                    new CancellationSignal(),
+                    Runnable::run,
+                    new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+                        @Override
+                        public void onResult(GetCredentialResponse response) {
+                            handleGoogleResponse(response.getCredential(), emitter);
+                        }
+
+                        @Override
+                        public void onError(GetCredentialException e) {
+                            emitter.onError(e);
                         }
                     }
+            );
+        }).subscribeOn(AndroidSchedulers.mainThread());
+     }
 
-                    @Override
-                    public void onError(@NonNull GetCredentialException e) {
-                        mainHandler.post(() -> callback.onError("Google Error: " + e.getMessage()));
-                    }
-                }
-        );
-    }
-
-
-    private void handleGoogleResponse(androidx.credentials.Credential credential, AuthCallback callback) {
+    private void handleGoogleResponse(androidx.credentials.Credential credential, SingleEmitter<FirebaseUser> emitter) {
         if (credential instanceof androidx.credentials.CustomCredential &&
-                credential.getType().equals(com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
+                credential.getType().equals(GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
             try {
-                com.google.android.libraries.identity.googleid.GoogleIdTokenCredential tokenCredential =
-                        com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.createFrom(credential.getData());
+                GoogleIdTokenCredential tokenCredential = GoogleIdTokenCredential.createFrom(credential.getData());
+                AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(tokenCredential.getIdToken(), null);
 
-                AuthCredential firebaseCredential =
-                        GoogleAuthProvider.getCredential(tokenCredential.getIdToken(), null);
-
-                loginWithGoogle(firebaseCredential, callback);
+                 loginWithGoogle(firebaseCredential, emitter);
 
             } catch (Exception e) {
-                mainHandler.post(() -> callback.onError("Token Error: " + e.getMessage()));
+                emitter.onError(e);
             }
         } else {
-            mainHandler.post(() -> callback.onError("Invalid credential type"));
+            emitter.onError(new Exception("Invalid credential type"));
         }
     }
 
-    public void loginWithGoogle(AuthCredential credential, AuthCallback callback) {
+    private void loginWithGoogle(AuthCredential credential, SingleEmitter<FirebaseUser> emitter) {
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        callback.onSuccess(firebaseAuth.getCurrentUser());
+                    if (task.isSuccessful() && firebaseAuth.getCurrentUser() != null) {
+                        emitter.onSuccess(firebaseAuth.getCurrentUser());
                     } else {
-                        callback.onError(task.getException() != null ? task.getException().getMessage() : "Unknown error");
+                        emitter.onError(task.getException() != null ? task.getException() : new Exception("Login failed"));
                     }
                 });
     }
 
-    public void registerWithEmail(String email, String password, AuthCallback callback) {
-        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            callback.onError("Email or password cannot be empty");
-            return;
-        }
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        callback.onSuccess(firebaseAuth.getCurrentUser());
-                    } else {
-                        callback.onError(task.getException() != null ?
-                                task.getException().getLocalizedMessage() : "Unknown error");
-                    }
-                });
+    public Single<FirebaseUser> registerWithEmail(String email, String password) {
+        return Single.<FirebaseUser>create(emitter -> {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            emitter.onSuccess(firebaseAuth.getCurrentUser());
+                        } else {
+                            emitter.onError(task.getException());
+                        }
+                    });
+        }).subscribeOn(Schedulers.io());
     }
 
-    public void loginWithEmail(String email, String password, AuthCallback callback) {
-        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            callback.onError("Email or password cannot be empty");
-            return;
-        }
-
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        callback.onSuccess(firebaseAuth.getCurrentUser());
-                    } else {
-                        callback.onError(task.getException() != null ?
-                                task.getException().getLocalizedMessage() : "Unknown error");
-                    }
-                });
+    public Single<FirebaseUser> loginWithEmail(String email, String password) {
+        return Single.<FirebaseUser>create(emitter -> {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            emitter.onSuccess(firebaseAuth.getCurrentUser());
+                        } else {
+                            emitter.onError(task.getException());
+                        }
+                    });
+        }).subscribeOn(Schedulers.io());
     }
+
 
     public FirebaseUser getCurrentUser() {
         return firebaseAuth.getCurrentUser();
     }
 
-    public void signOut() {
-        firebaseAuth.signOut();
+    public Completable signOut() {
+        return Completable.fromAction(firebaseAuth::signOut)
+                .subscribeOn(Schedulers.io());
     }
 }
