@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.repository.remote.auth.AuthRepository;
 import com.hammi.foodplanner.ui.auth.view.AuthenticationActivity;
@@ -57,6 +59,12 @@ public class profile extends Fragment implements ProfileContract.View {
             startActivity(intent);
             getActivity().finish();
         }
+    }
+
+    @Override
+    public void showError(String message) {
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show();
+
     }
 
     @Override

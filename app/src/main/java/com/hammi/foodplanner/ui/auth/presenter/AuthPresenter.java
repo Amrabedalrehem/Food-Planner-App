@@ -16,15 +16,15 @@ public class AuthPresenter implements AuthContract.Presenter {
         this.authRepository = authRepository;
     }
 
-    @Override
+     @Override
     public void signInWithGoogle(Activity activity, String webClientId) {
         if (view == null) return;
         view.showLoading();
         compositeDisposable.add(
                 authRepository.signInWithGoogle(activity, webClientId)
-                .observeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                      user -> {
+                                user -> {
                                     if (view != null) {
                                         view.hideLoading();
                                         view.navigateToHome();
@@ -33,20 +33,19 @@ public class AuthPresenter implements AuthContract.Presenter {
                                 throwable -> {
                                     if (view != null) {
                                         view.hideLoading();
-                                        view.showError(throwable.getMessage());}
-                      }
+                                        view.showError(throwable.getMessage());
+                                    }
+                                }
                         )
         );
     }
 
-    @Override
+     @Override
     public void registerWithEmailAndPassword(String email, String password) {
         if (view == null) return;
         view.showLoading();
-        compositeDisposable.
-                add(
-                authRepository
-                        .registerWithEmail(email, password)
+        compositeDisposable.add(
+                authRepository.registerWithEmail(email, password)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 user -> {
@@ -65,15 +64,12 @@ public class AuthPresenter implements AuthContract.Presenter {
         );
     }
 
-    @Override
+     @Override
     public void loginWithEmailAndPassword(String email, String password) {
         if (view == null) return;
         view.showLoading();
-
-        compositeDisposable
-                .add(
-                authRepository
-                        .loginWithEmail(email, password)
+        compositeDisposable.add(
+                authRepository.loginWithEmail(email, password)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 user -> {
@@ -92,16 +88,35 @@ public class AuthPresenter implements AuthContract.Presenter {
         );
     }
 
-    @Override
+     @Override
     public void loginAsGuest() {
         if (view == null) return;
-        authRepository.saveGuestSession();
-        view.navigateToHome();
+
+        view.showLoading();
+
+        compositeDisposable.add(
+                authRepository.saveGuestSessionRx()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> {
+                                    if (view != null) {
+                                        view.hideLoading();
+                                        view.navigateToHome();
+                                    }
+                                },
+                                throwable -> {
+                                    if (view != null) {
+                                        view.hideLoading();
+                                        view.showError(throwable.getMessage());
+                                    }
+                                }
+                        )
+        );
     }
 
-    @Override
+     @Override
     public void detachView() {
-         compositeDisposable.clear();
+        compositeDisposable.clear();
         view = null;
     }
 }

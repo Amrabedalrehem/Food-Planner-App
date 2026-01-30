@@ -155,10 +155,19 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     @Override
     public void showAddToPlanDialog() {
         final Calendar c = Calendar.getInstance();
-        new DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
-            presenter.addMealToPlan(year, month, dayOfMonth);
-        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getContext(),
+                (view, year, month, dayOfMonth) -> presenter.addMealToPlan(year, month, dayOfMonth),
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH)
+        );
+
+        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+
+        datePickerDialog.show();
     }
+
 
     @Override
     public void showMealAddedToPlan() {
