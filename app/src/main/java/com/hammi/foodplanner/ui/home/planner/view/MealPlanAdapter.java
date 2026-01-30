@@ -110,7 +110,6 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
                     .into(mealImage);
 
             itemView.setOnClickListener(v -> listener.onItemClick(meal));
-
             deleteButton.setOnClickListener(v -> {
                 if (planEntry != null) {
                     listener.onDeleteClick(planEntry.getId(), planEntry);

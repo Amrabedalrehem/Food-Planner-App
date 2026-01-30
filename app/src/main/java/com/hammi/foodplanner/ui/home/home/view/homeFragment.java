@@ -1,6 +1,7 @@
 package com.hammi.foodplanner.ui.home.home.view;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,7 @@ import com.hammi.foodplanner.ui.home.home.presentation.RandomMeal.RandomMealPres
 import com.hammi.foodplanner.ui.home.home.view.categorries.homeCategoriesAdapter;
 import com.hammi.foodplanner.ui.home.profile.presenter.ProfileContract;
 import com.hammi.foodplanner.ui.home.profile.presenter.ProfilePresenter;
+import com.hammi.foodplanner.utility.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,7 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
     private String Id;
     private ProfilePresenter presenter;
     private Dialog loadingDialog;
+    private Context context;
 
     @Nullable
     @Override
@@ -71,6 +74,7 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        context = getContext();
         textViewSeeAll = view.findViewById(R.id.tvSeeAll);
         recyclerView = view.findViewById(R.id.rvCategories);
         tvUser = view.findViewById(R.id.tvUser);
@@ -116,13 +120,20 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(R.id.action_home_Ffragment_to_search3);
         });
-        card_Details.setOnClickListener(v -> {
+        if(NetworkUtils.isInternetAvailable(context))
+        {
+            card_Details.setOnClickListener(v -> {
 
-            homeFragmentDirections.ActionHomeFfragmentToDetialsFragment action =
-                    homeFragmentDirections.actionHomeFfragmentToDetialsFragment(Id);
-            Navigation.findNavController(v).navigate(action);
+                homeFragmentDirections.ActionHomeFfragmentToDetialsFragment action =
+                        homeFragmentDirections.actionHomeFfragmentToDetialsFragment(Id);
+                Navigation.findNavController(v).navigate(action);
 
-        });
+            });
+        }
+        else {
+
+        }
+
         presenter = new ProfilePresenter(this, new AuthRepository(requireContext()));
         presenter.loadUserData();
 

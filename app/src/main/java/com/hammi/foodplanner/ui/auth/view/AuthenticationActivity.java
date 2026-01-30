@@ -52,8 +52,11 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthCon
                 presenter.signInWithGoogle(this, getString(R.string.default_web_client_id))
         );
 
-        findViewById(R.id.btnGuest).setOnClickListener(v -> navigateToHome());
-
+        findViewById(R.id.btnGuest).setOnClickListener(v -> {
+            if (presenter != null) {
+                presenter.loginAsGuest();
+            }
+        });
         btmface.setOnClickListener(v -> showComingSoon("Facebook"));
         btmtwiter.setOnClickListener(v -> showComingSoon("Twitter"));
 

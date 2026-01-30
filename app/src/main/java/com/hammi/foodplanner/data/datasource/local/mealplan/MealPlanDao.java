@@ -52,5 +52,6 @@ public interface MealPlanDao {
 
     @Query("SELECT * FROM meal_plan")
     Single<List<MealPlanEntity>> getAllMealPlansOnce();
-
+     @Query("SELECT * FROM meal_plan")
+    List<MealPlanEntity> getAllMealPlansDirect();
  }
