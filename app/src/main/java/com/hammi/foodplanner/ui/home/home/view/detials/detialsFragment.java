@@ -1,6 +1,8 @@
 package com.hammi.foodplanner.ui.home.home.view.detials;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,28 +14,27 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.remote.Meal;
+import com.hammi.foodplanner.data.repository.sharedprefs.SharedPrefsRepository;
+import com.hammi.foodplanner.ui.auth.view.AuthenticationActivity;
 import com.hammi.foodplanner.ui.home.home.presentation.Details.DetailsContract;
 import com.hammi.foodplanner.ui.home.home.presentation.Details.DetailsPresenter;
-import com.google.android.material.button.MaterialButton;
 import com.hammi.foodplanner.utility.SnackBar;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 public class detialsFragment extends Fragment implements DetailsContract.View {
-    private  Dialog loadingDialog;
+    private Dialog loadingDialog;
     private ImageView ivRecipeImage;
     private TextView tvRecipeTitle, tvCuisine, tvCategory;
     private RecyclerView rvIngredients, rvSteps;
@@ -44,6 +45,13 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     private WebView webViewVideo;
     private View cardVideo;
     private View view;
+    private SharedPrefsRepository sharedPrefsRepository;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedPrefsRepository = new SharedPrefsRepository(requireContext());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,11 +60,8 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
         initViews(view);
         setupConfigs();
         presenter = new DetailsPresenter(this, getContext());
-
         String mealId = detialsFragmentArgs.fromBundle(getArguments()).getId();
-
         presenter.getDetails(mealId);
-
         setupClickListeners();
 
         return view;
@@ -65,7 +70,7 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-   this.view = view;
+        this.view = view;
     }
 
     private void initViews(View view) {
@@ -86,20 +91,34 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     private void setupClickListeners() {
         btnBack.setOnClickListener(v -> requireActivity().onBackPressed());
 
-        btnFavorite.setOnClickListener(v -> presenter.toggleFavorite());
+        btnFavorite.setOnClickListener(v -> {
+            sharedPrefsRepository.getUserMode().subscribe(mode -> {
+                if ("guest".equalsIgnoreCase(mode)) {
+                    showLoginAlert();
+                } else {
+                    presenter.toggleFavorite();
+                }
+            });
+        });
 
-        btnAddToPlan.setOnClickListener(v -> presenter.onAddToPlanClicked());
+        btnAddToPlan.setOnClickListener(v -> {
+            sharedPrefsRepository.getUserMode().subscribe(mode -> {
+                if ("guest".equalsIgnoreCase(mode)) {
+                    showLoginAlert();
+                } else {
+                    presenter.onAddToPlanClicked();
+                }
+            });
+        });
     }
 
     private void setupConfigs() {
         rvIngredients.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rvSteps.setLayoutManager(new LinearLayoutManager(getContext()));
-
         WebSettings webSettings = webViewVideo.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webViewVideo.setWebViewClient(new WebViewClient());
     }
-
 
     @Override
     public void showDetails(Meal currentMeal) {
@@ -107,10 +126,8 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
         tvCuisine.setText(currentMeal.getStrArea());
         tvCategory.setText(currentMeal.getStrCategory());
         Glide.with(this).load(currentMeal.getStrMealThumb()).into(ivRecipeImage);
-
         DetialsHAdapter hAdapter = new DetialsHAdapter(currentMeal.getFullIngredients());
         rvIngredients.setAdapter(hAdapter);
-
         String rawInstructions = currentMeal.getStrInstructions();
         if (rawInstructions != null) {
             List<String> stepsList = Arrays.asList(rawInstructions.split("\\r\\n|\\n|\\. "));
@@ -132,24 +149,22 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     @Override
     public void updateFavoriteButton(boolean isFavorite) {
         if (isFavorite) {
-             btnFavorite.setImageResource(R.drawable.save);
-             btnFavorite.setImageTintList(null);
+            btnFavorite.setImageResource(R.drawable.save);
+            btnFavorite.setImageTintList(null);
         } else {
-             btnFavorite.setImageResource(R.drawable.iconheart);
-             btnFavorite.setImageTintList(null);
+            btnFavorite.setImageResource(R.drawable.iconheart);
+            btnFavorite.setImageTintList(null);
         }
     }
 
     @Override
     public void showFavoriteAdded() {
-         SnackBar.showSuccess(view, "Meal added to  favorites ");
-
+        SnackBar.showSuccess(view, "Meal added to  favorites ");
     }
 
     @Override
     public void showFavoriteRemoved() {
         SnackBar.showSuccess(view, "Meal removed from favorites! ");
-
     }
 
     @Override
@@ -168,17 +183,14 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
         datePickerDialog.show();
     }
 
-
     @Override
     public void showMealAddedToPlan() {
         SnackBar.showSuccess(view, "Added to your Weekly Plan!");
-
     }
 
     @Override
     public void showMealPlanError(String message) {
         SnackBar.showSuccess(view, "Error adding to your Weekly Plan!");
-
     }
 
     @Override
@@ -190,7 +202,6 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
         snackbar.setAction("OK", v -> snackbar.dismiss());
         snackbar.setActionTextColor(Color.YELLOW);
         snackbar.show();
-
     }
 
     @Override
@@ -203,13 +214,26 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
         }
         loadingDialog.show();
     }
+
     @Override
     public void hideLoading() {
-
         if (loadingDialog != null && loadingDialog.isShowing()) {
             loadingDialog.dismiss();
         }
     }
+
+    private void showLoginAlert() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Login Required")
+                .setMessage("Please login first to use this feature.")
+                .setCancelable(true)
+                .setPositiveButton("Login", (dialog, which) -> {
+                    startActivity(new Intent(requireContext(),  AuthenticationActivity.class));
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
