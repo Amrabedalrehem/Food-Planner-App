@@ -1,5 +1,7 @@
 package com.hammi.foodplanner.ui.home.home.view;
 
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.remote.Category;
 import com.hammi.foodplanner.data.models.remote.Meal;
@@ -56,6 +59,7 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
     private LinearLayout card_Details;
     private String Id;
     private ProfilePresenter presenter;
+    private Dialog loadingDialog;
 
     @Nullable
     @Override
@@ -155,18 +159,32 @@ public class homeFragment extends Fragment implements CategoriesContract.View, R
 
     @Override
     public void showError(String message) {
-        Log.e("cat99", ": bad " + message);
-        Toast.makeText(requireContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
+        View rootView = requireActivity().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(Color.parseColor("#FF6D00"));
+        snackbar.setTextColor(Color.WHITE);
+        snackbar.setAction("OK", v -> snackbar.dismiss());
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
+
     }
 
     @Override
     public void showLoading() {
-
+        if (loadingDialog == null) {
+            loadingDialog = new Dialog(requireContext());
+            loadingDialog.setContentView(R.layout.dialog_loading);
+            loadingDialog.setCancelable(false);
+            loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+        loadingDialog.show();
     }
-
     @Override
     public void hideLoading() {
 
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 
     @Override

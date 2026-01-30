@@ -1,5 +1,7 @@
 package com.hammi.foodplanner.ui.home.home.view.detials;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +13,27 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.remote.Meal;
 import com.hammi.foodplanner.ui.home.home.presentation.Details.DetailsContract;
 import com.hammi.foodplanner.ui.home.home.presentation.Details.DetailsPresenter;
 import com.google.android.material.button.MaterialButton;
+import com.hammi.foodplanner.utility.SnackBar;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 public class detialsFragment extends Fragment implements DetailsContract.View {
-
+    private  Dialog loadingDialog;
     private ImageView ivRecipeImage;
     private TextView tvRecipeTitle, tvCuisine, tvCategory;
     private RecyclerView rvIngredients, rvSteps;
@@ -35,6 +43,7 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
     private MaterialButton btnWatchVideo;
     private WebView webViewVideo;
     private View cardVideo;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +60,12 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
         setupClickListeners();
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+   this.view = view;
     }
 
     private void initViews(View view) {
@@ -127,12 +142,14 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
 
     @Override
     public void showFavoriteAdded() {
-        Toast.makeText(getContext(), "Added to Favorites!", Toast.LENGTH_SHORT).show();
+         SnackBar.showSuccess(view, "Meal added to  favorites ");
+
     }
 
     @Override
     public void showFavoriteRemoved() {
-        Toast.makeText(getContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
+        SnackBar.showSuccess(view, "Meal removed from favorites! ");
+
     }
 
     @Override
@@ -145,25 +162,45 @@ public class detialsFragment extends Fragment implements DetailsContract.View {
 
     @Override
     public void showMealAddedToPlan() {
-        Toast.makeText(getContext(), "Added to your Weekly Plan!", Toast.LENGTH_SHORT).show();
+        SnackBar.showSuccess(view, "Added to your Weekly Plan!");
+
     }
 
     @Override
     public void showMealPlanError(String message) {
+        SnackBar.showSuccess(view, "Error adding to your Weekly Plan!");
 
     }
-
-    @Override
-    public void showLoading() {   }
-
-    @Override
-    public void hideLoading() {  }
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        View rootView = requireActivity().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(Color.parseColor("#FF6D00"));
+        snackbar.setTextColor(Color.WHITE);
+        snackbar.setAction("OK", v -> snackbar.dismiss());
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
+
     }
 
+    @Override
+    public void showLoading() {
+        if (loadingDialog == null) {
+            loadingDialog = new Dialog(requireContext());
+            loadingDialog.setContentView(R.layout.dialog_loading);
+            loadingDialog.setCancelable(false);
+            loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+        loadingDialog.show();
+    }
+    @Override
+    public void hideLoading() {
+
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

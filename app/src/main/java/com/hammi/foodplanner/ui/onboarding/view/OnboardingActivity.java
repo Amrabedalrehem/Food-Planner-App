@@ -28,7 +28,7 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardingC
 
         presenter = new OnboardingPresenter(this, this);
 
-         viewPager2 = findViewById(R.id.viewPager);
+        viewPager2 = findViewById(R.id.viewPager);
         btnNext = findViewById(R.id.btnNext);
         btnSkip = findViewById(R.id.btnSkip);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
