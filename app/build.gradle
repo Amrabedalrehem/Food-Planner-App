@@ -78,7 +78,7 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-rxjava3:$room_version")
-
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:13.0.0'
     // Testing
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

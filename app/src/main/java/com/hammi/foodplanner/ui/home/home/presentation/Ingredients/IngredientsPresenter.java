@@ -1,40 +1,46 @@
 package com.hammi.foodplanner.ui.home.home.presentation.Ingredients;
 
-import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
-import com.hammi.foodplanner.data.models.remote.Ingredients;
 import com.hammi.foodplanner.data.repository.remote.home.ingredients.IngredientsRepository;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-import java.util.List;
+public class IngredientsPresenter implements IngredientsContract.Presenter {
+    private IngredientsContract.View view;
+    private final IngredientsRepository ingredientsRepository;
+     private final CompositeDisposable disposables = new CompositeDisposable();
 
-public class IngredientsPresenter  implements  IngredientsContract.Presenter{
-    IngredientsContract.View view;
-    IngredientsRepository ingredientsRepository;
-   public IngredientsPresenter(IngredientsContract.View view)
-    {
-        ingredientsRepository = IngredientsRepository.getInstance();
-        this.view =view;
+    public IngredientsPresenter(IngredientsContract.View view) {
+        this.ingredientsRepository = IngredientsRepository.getInstance();
+        this.view = view;
     }
-
     @Override
     public void getIngredients() {
         if (view == null) return;
         view.showLoading();
-       ingredientsRepository.getAllIngredients(new NetworkCallback<List<Ingredients>>() {
-           @Override
-           public void onSuccess(List<Ingredients> data) {
-               if (view != null) {
-                   view.hideLoading();
-                   view.showAllIngredients(data);
-               }
-           }
-           @Override
-           public void onError(String errorMessage) {
-               if (view != null) {
-                   view.hideLoading();
-                   view.showError(errorMessage);
-               }
-           }
-       });
-
+        disposables.add(
+                ingredientsRepository.getAllIngredients()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                ingredientsList -> {
+                                    if (view != null) {
+                                        view.hideLoading();
+                                        view.showAllIngredients(ingredientsList);
+                                    }
+                                },
+                                throwable -> {
+                                    if (view != null) {
+                                        view.hideLoading();
+                                        view.showError(throwable.getMessage());
+                                    }
+                                }
+                        )
+        );
+    }
+    @Override
+    public void detachView() {
+        disposables.clear();
+        this.view = null;
     }
 }

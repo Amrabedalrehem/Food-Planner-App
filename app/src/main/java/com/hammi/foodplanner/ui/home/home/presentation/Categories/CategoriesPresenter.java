@@ -1,40 +1,44 @@
 package com.hammi.foodplanner.ui.home.home.presentation.Categories;
 
-import com.hammi.foodplanner.data.datasource.remote.home.catogories.CategoryCallback;
-import com.hammi.foodplanner.data.models.remote.Category;
 import com.hammi.foodplanner.data.repository.remote.home.categorie.CategoriesRepository;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-import java.util.List;
-
-public class CategoriesPresenter  implements  CategoriesContract.Presenter {
-    public CategoriesContract.View view;
-    public CategoriesRepository categoriesRepository;
+public class CategoriesPresenter implements CategoriesContract.Presenter {
+    private CategoriesContract.View view;
+    private final CategoriesRepository categoriesRepository;
+    private final CompositeDisposable disposable = new CompositeDisposable();
 
     public CategoriesPresenter(CategoriesContract.View view) {
-        categoriesRepository = CategoriesRepository.getInstance();
+        this.categoriesRepository = CategoriesRepository.getInstance();
         this.view = view;
     }
-
     @Override
     public void getCategories() {
         if (view == null) return;
-        view.showLoading();
-        categoriesRepository.getAllCategories(new CategoryCallback() {
-            @Override
-            public void onSuccess(List<Category> categoryList) {
-                if (view != null) {
-                    view.hideLoading();
-                    view.showCategories(categoryList);
-                }
-            }
 
-            @Override
-            public void onError(String errorMessage) {
-                if (view != null) {
-                    view.hideLoading();
-                    view.showError(errorMessage);
-                }
-            }
-        });
+        view.showLoading();
+
+        disposable.add(
+                categoriesRepository.getAllCategories()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                categoryList -> {
+                                    view.hideLoading();
+                                    view.showCategories(categoryList);
+                                },
+                                throwable -> {
+                                    view.hideLoading();
+                                    view.showError(throwable.getMessage());
+                                }
+                        )
+        );
+    }
+
+     public void detachView() {
+        disposable.clear();
+        this.view = null;
     }
 }

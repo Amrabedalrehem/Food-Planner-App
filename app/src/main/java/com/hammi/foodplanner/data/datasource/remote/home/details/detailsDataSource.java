@@ -1,56 +1,35 @@
 package com.hammi.foodplanner.data.datasource.remote.home.details;
 
 import com.hammi.foodplanner.data.datasource.remote.meal.MealService;
-import com.hammi.foodplanner.data.datasource.remote.meal.NetworkCallback;
-import com.hammi.foodplanner.data.datasource.remote.meal.MealResponse;
 import com.hammi.foodplanner.data.models.remote.Meal;
 import com.hammi.foodplanner.network.Network;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.core.Single;
 
 public class detailsDataSource {
-   public static detailsDataSource dataSource;
-    MealService mealService;
-    private detailsDataSource()
-    {
-        mealService = Network.instance.mealService;
+    private static detailsDataSource dataSource;
+    private final MealService mealService;
+
+    private detailsDataSource() {
+         mealService = Network.getInstance().mealService;
     }
-   public static synchronized detailsDataSource  getInstance()
-   {
-       if(dataSource ==null)
-       {
-           dataSource = new detailsDataSource();
-       return  dataSource;
-       }
-       return  dataSource;
-   }
 
-   public  void  getDetails(String id,NetworkCallback<List<Meal>> callback){
-       mealService.getMealDetailsById(id).enqueue(new Callback<MealResponse>() {
-           @Override
-           public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-               if (response.isSuccessful()
-                       && response.body() != null
-                       && response.body().getMeals() != null
-                       && !response.body().getMeals().isEmpty()) {
+    public static synchronized detailsDataSource getInstance() {
+        if (dataSource == null) {
+            dataSource = new detailsDataSource();
+        }
+        return dataSource;
+    }
 
-                   callback.onSuccess(response.body().getMeals());
-               } else {
-                   callback.onError("No meals found");
-               }
-
-           }
-
-           @Override
-           public void onFailure(Call<MealResponse> call, Throwable t) {
-               callback.onError("Network error: " + t.getMessage());
-
-           }
-       });
-   }
-
+     public Single<List<Meal>> getDetails(String id) {
+        return mealService.getMealDetailsById(id)
+                .map(response -> {
+                    if (response.getMeals() != null && !response.getMeals().isEmpty()) {
+                        return response.getMeals();
+                    } else {
+                         throw new Exception("No meals found for ID: " + id);
+                    }
+                });
+    }
 }
