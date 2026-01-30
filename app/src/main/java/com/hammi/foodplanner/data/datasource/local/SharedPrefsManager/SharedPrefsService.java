@@ -2,34 +2,44 @@ package com.hammi.foodplanner.data.datasource.local.SharedPrefsManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 public class SharedPrefsService {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private final SharedPreferences sharedPreferences;
+    private final SharedPreferences.Editor editor;
+
     public SharedPrefsService(Context context) {
         sharedPreferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
-    public void saveString(String key, String value) {
-        editor.putString(key, value);
-        editor.apply();
+
+     public Completable saveString(String key, String value) {
+        return Completable.fromAction(() -> {
+            editor.putString(key, value);
+            editor.apply();
+        });
     }
 
-     public String getString(String key, String defaultValue) {
-        return sharedPreferences.getString(key, defaultValue);
+     public Single<String> getString(String key, String defaultValue) {
+        return Single.fromCallable(() -> sharedPreferences.getString(key, defaultValue));
     }
 
-     public void saveBoolean(String key, boolean value) {
-        editor.putBoolean(key, value);
-        editor.apply();
+    public Completable saveBoolean(String key, boolean value) {
+        return Completable.fromAction(() -> {
+            editor.putBoolean(key, value);
+            editor.apply();
+        });
     }
 
-     public boolean getBoolean(String key, boolean defaultValue) {
-        return sharedPreferences.getBoolean(key, defaultValue);
+    public Single<Boolean> getBoolean(String key, boolean defaultValue) {
+        return Single.fromCallable(() -> sharedPreferences.getBoolean(key, defaultValue));
     }
 
-     public void clear() {
-          editor.clear();
-          editor.apply();
+    public Completable clear() {
+        return Completable.fromAction(() -> {
+            editor.clear();
+            editor.apply();
+        });
     }
 }
