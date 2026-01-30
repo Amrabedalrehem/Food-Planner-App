@@ -3,10 +3,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +14,7 @@ import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.ui.auth.presenter.AuthContract;
 import com.hammi.foodplanner.ui.auth.presenter.AuthPresenter;
 import com.hammi.foodplanner.data.repository.remote.auth.AuthRepository;
-import com.hammi.foodplanner.ui.home.HomeActivity;
+import com.hammi.foodplanner.ui.main_home.view.HomeActivity;
 
 
 public class AuthenticationActivity extends AppCompatActivity implements AuthContract.View {
