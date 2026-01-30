@@ -21,4 +21,3 @@ public class NetworkUtils {
                 && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
     }
 }
-//NetworkUtils.isInternetAvailable(context)

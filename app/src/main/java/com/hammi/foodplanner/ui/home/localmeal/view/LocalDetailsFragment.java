@@ -1,5 +1,7 @@
 package com.hammi.foodplanner.ui.home.localmeal.view;
 
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hammi.foodplanner.R;
@@ -24,7 +27,6 @@ import com.hammi.foodplanner.ui.home.home.view.detials.DetialsHAdapter;
 import com.hammi.foodplanner.ui.home.home.view.detials.DetailsVAdapter;
 import com.hammi.foodplanner.ui.home.localmeal.presenter.LocalDetailsContract;
 import com.hammi.foodplanner.ui.home.localmeal.presenter.LocalDetailsPresenter;
-
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +41,7 @@ public class LocalDetailsFragment extends Fragment implements LocalDetailsContra
     private WebView webViewVideo;
     private View cardVideo;
     private TextView btnWatchVideo;
-
+    private Dialog loadingDialog;
     private MealEntity currentMeal;
 
     @Override
@@ -124,16 +126,33 @@ public class LocalDetailsFragment extends Fragment implements LocalDetailsContra
     }
 
     @Override
-    public void showLoading() {
-     }
+    public void showError(String message) {
+        View rootView = requireActivity().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(Color.parseColor("#FF6D00"));
+        snackbar.setTextColor(Color.WHITE);
+        snackbar.setAction("OK", v -> snackbar.dismiss());
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
 
+    }
+
+    @Override
+    public void showLoading() {
+        if (loadingDialog == null) {
+            loadingDialog = new Dialog(requireContext());
+            loadingDialog.setContentView(R.layout.dialog_loading);
+            loadingDialog.setCancelable(false);
+            loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+        loadingDialog.show();
+    }
     @Override
     public void hideLoading() {
-     }
 
-    @Override
-    public void showError(String message) {
-        Toast.makeText(getContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 
     @Override

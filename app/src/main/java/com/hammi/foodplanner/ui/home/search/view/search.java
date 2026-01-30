@@ -1,4 +1,6 @@
 package com.hammi.foodplanner.ui.home.search.view;
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.remote.Category;
 import com.hammi.foodplanner.data.models.remote.Countries;
@@ -34,8 +38,7 @@ import java.util.List;
 public class search extends Fragment implements SearchContract.View {
 
     private static final String TAG = "SearchFragment";
-
-
+    private  Dialog loadingDialog;
     private EditText etSearch;
     private ImageView icClear, btnBack;
     private ChipGroup chipGroupFilter, chipGroupSubFilter;
@@ -268,19 +271,33 @@ public class search extends Fragment implements SearchContract.View {
 
     @Override
     public void showError(String message) {
-        Log.e(TAG, "showError: " + message);
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        View rootView = requireActivity().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(Color.parseColor("#FF6D00"));
+        snackbar.setTextColor(Color.WHITE);
+        snackbar.setAction("OK", v -> snackbar.dismiss());
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
+
     }
 
     @Override
     public void showLoading() {
-        Log.d(TAG, "showLoading: Showing loading state");
-     }
-
+        if (loadingDialog == null) {
+            loadingDialog = new Dialog(requireContext());
+            loadingDialog.setContentView(R.layout.dialog_loading);
+            loadingDialog.setCancelable(false);
+            loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+        loadingDialog.show();
+    }
     @Override
     public void hideLoading() {
-        Log.d(TAG, "hideLoading: Hiding loading state");
-     }
+
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
+    }
 
     @Override
     public void showEmptyState() {

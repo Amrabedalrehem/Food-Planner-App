@@ -1,5 +1,7 @@
 package com.hammi.foodplanner.ui.home.home.view.Countries;
 
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.remote.Countries;
 import com.hammi.foodplanner.ui.home.home.presentation.Countries.CountriesContract;
@@ -31,10 +34,9 @@ public class countriesFragment extends Fragment implements CountriesContract.Vie
     CountriesAdapter countriesAdapter;
     List<Countries> countriesList = new ArrayList<>();
     ImageView imageView;
-
+   Dialog loadingDialog;
     public countriesFragment() {
-        // Required empty public constructor
-    }
+     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -79,16 +81,31 @@ public class countriesFragment extends Fragment implements CountriesContract.Vie
 
     @Override
     public void showError(String message) {
+        View rootView = requireActivity().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(Color.parseColor("#FF6D00"));
+        snackbar.setTextColor(Color.WHITE);
+        snackbar.setAction("OK", v -> snackbar.dismiss());
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
 
     }
 
     @Override
     public void showLoading() {
-
+        if (loadingDialog == null) {
+            loadingDialog = new Dialog(requireContext());
+            loadingDialog.setContentView(R.layout.dialog_loading);
+            loadingDialog.setCancelable(false);
+            loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+        loadingDialog.show();
     }
-
     @Override
     public void hideLoading() {
 
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.hammi.foodplanner.ui.home.favorites.view;
 
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,7 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.hammi.foodplanner.R;
+
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +26,11 @@ import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.ui.home.favorites.presenter.FavoritesContract;
 import com.hammi.foodplanner.ui.home.favorites.presenter.FavoritesPresenter;
 import com.hammi.foodplanner.ui.home.home.view.categorries.allcategoriesDirections;
+import com.hammi.foodplanner.utility.SnackBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class favorites extends Fragment implements FavoritesContract.View {
     private RecyclerView recyclerView;
@@ -30,7 +38,9 @@ public class favorites extends Fragment implements FavoritesContract.View {
     private TextView emptyStateText;
     private FavoritesPresenter presenter;
     private FavoritesAdapter adapter;
-
+    private Dialog loadingDialog;
+    View view;
+    ImageView ivSearchInF;
      @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +50,8 @@ public class favorites extends Fragment implements FavoritesContract.View {
      @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+         this.view = view;
+         ivSearchInF = view.findViewById(R.id.ivSearchInF);
          recyclerView = view.findViewById(R.id.favoritesRecyclerView);
          progressBar = view.findViewById(R.id.progressBar);
          emptyStateText = view.findViewById(R.id.emptyStateText);
@@ -62,6 +74,11 @@ public class favorites extends Fragment implements FavoritesContract.View {
          recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
          recyclerView.setAdapter(adapter);
          presenter.loadFavorites();
+         ivSearchInF.setOnClickListener(v->{
+             NavDirections action = favoritesDirections.actionFavoritesToSearch3();
+             Navigation.findNavController(view).navigate(action);
+
+         });
     }
 
     @Override
@@ -80,24 +97,37 @@ public class favorites extends Fragment implements FavoritesContract.View {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
+        View rootView = requireActivity().findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(Color.parseColor("#FF6D00"));
+        snackbar.setTextColor(Color.WHITE);
+        snackbar.setAction("OK", v -> snackbar.dismiss());
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
+
     }
 
     @Override
     public void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
-        emptyStateText.setVisibility(View.GONE);
+        if (loadingDialog == null) {
+            loadingDialog = new Dialog(requireContext());
+            loadingDialog.setContentView(R.layout.dialog_loading);
+            loadingDialog.setCancelable(false);
+            loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+        loadingDialog.show();
     }
-
     @Override
     public void hideLoading() {
-        progressBar.setVisibility(View.GONE);
+
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 
     @Override
     public void showMealRemovedSuccess() {
-        Toast.makeText(getContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
+         SnackBar.showSuccess(view, "Meal removed from favorites! ");
     }
 
     @Override
