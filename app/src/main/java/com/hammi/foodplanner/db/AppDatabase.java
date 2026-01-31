@@ -13,7 +13,7 @@ import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.data.models.local.MealPlanEntity;
 
 @Database(
-        entities = {MealEntity.class, FavoriteEntity.class, MealPlanEntity.class}, version = 5, exportSchema = false)
+        entities = {MealEntity.class, FavoriteEntity.class, MealPlanEntity.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract MealDao mealDao();

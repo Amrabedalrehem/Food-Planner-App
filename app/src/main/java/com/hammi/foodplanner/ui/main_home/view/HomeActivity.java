@@ -1,5 +1,4 @@
 package com.hammi.foodplanner.ui.main_home.view;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.ui.main_home.presenter.HomeContract;
 import com.hammi.foodplanner.ui.main_home.presenter.HomePresenter;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 public class HomeActivity extends AppCompatActivity implements HomeContract.View {
 
     private HomePresenter presenter;
