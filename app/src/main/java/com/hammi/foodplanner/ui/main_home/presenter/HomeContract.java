@@ -7,11 +7,14 @@ public interface HomeContract {
         void showNoInternet();
         void hideNoInternet();
         void showLoading();
+        int getCurrentFragmentId();
     }
 
     interface Presenter {
         void startCheckingConnection(Context context);
         void stopCheckingConnection();
         void onDestroy();
+        void onFragmentChanged(int fragmentId);
+        void onRetryClicked(Context context);
     }
 }
