@@ -38,6 +38,5 @@ public interface FavoriteDao {
 
     @Query("SELECT * FROM favorites")
     Single<List<FavoriteEntity>> getAllFavoritesOnce();
-     @Query("SELECT * FROM favorites")
-    List<FavoriteEntity> getAllFavoritesDirect();
+
 }

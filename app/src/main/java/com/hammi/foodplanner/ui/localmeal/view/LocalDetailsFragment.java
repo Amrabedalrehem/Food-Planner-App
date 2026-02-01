@@ -23,12 +23,12 @@ import com.google.gson.reflect.TypeToken;
 import com.hammi.foodplanner.R;
 import com.hammi.foodplanner.data.models.local.MealEntity;
 import com.hammi.foodplanner.data.models.remote.IngredientItem;
-import com.hammi.foodplanner.ui.view.detials.DetialsHAdapter;
-import com.hammi.foodplanner.ui.view.detials.DetailsVAdapter;
+import com.hammi.foodplanner.ui.home.view.detials.DetialsHAdapter;
+import com.hammi.foodplanner.ui.home.view.detials.DetailsVAdapter;
 import com.hammi.foodplanner.ui.localmeal.presenter.LocalDetailsContract;
 import com.hammi.foodplanner.ui.localmeal.presenter.LocalDetailsPresenter;
 import java.lang.reflect.Type;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalDetailsFragment extends Fragment implements LocalDetailsContract.View {
@@ -95,12 +95,20 @@ public class LocalDetailsFragment extends Fragment implements LocalDetailsContra
 
          String rawInstructions = meal.getInstructions();
         if (rawInstructions != null) {
-            List<String> stepsList = Arrays.asList(rawInstructions.split("\\r\\n|\\n|\\. "));
+            List<String> stepsList = new ArrayList<>();
+            for (String s : rawInstructions.split("\\r?\\n|\\.\\s*")) {
+                String trim = s.trim();
+                if (!trim.isEmpty()) {
+                    stepsList.add(trim);
+                }
+            }
+
             DetailsVAdapter vAdapter = new DetailsVAdapter(stepsList);
             rvSteps.setAdapter(vAdapter);
         }
 
-         btnWatchVideo.setOnClickListener(v -> {
+
+        btnWatchVideo.setOnClickListener(v -> {
             if (meal.getYoutubeUrl() != null && !meal.getYoutubeUrl().isEmpty()) {
                 cardVideo.setVisibility(View.VISIBLE);
 

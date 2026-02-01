@@ -63,19 +63,31 @@ public class FirebaseRemoteDataSource {
         }));
     }
 
-    public Completable addToWeeklyPlan(MealPlanEntity mealPlan) {
+     public Completable addToWeeklyPlan(MealPlanEntity mealPlan) {
         return getUserId().flatMapCompletable(userId -> Completable.create(emitter -> {
             db.collection("users")
                     .document(userId)
                     .collection("weekly_plan")
-                    .document(mealPlan.getMealId())
+                    .document(createPlanDocId(mealPlan))
                     .set(mealPlan)
                     .addOnSuccessListener(unused -> emitter.onComplete())
                     .addOnFailureListener(emitter::onError);
         }));
     }
 
-    public Single<List<MealPlanEntity>> getAllMealPlans() {
+     public Completable removeFromWeeklyPlan(MealPlanEntity mealPlan) {
+        return getUserId().flatMapCompletable(userId -> Completable.create(emitter -> {
+            db.collection("users")
+                    .document(userId)
+                    .collection("weekly_plan")
+                    .document(createPlanDocId(mealPlan))
+                    .delete()
+                    .addOnSuccessListener(unused -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        }));
+    }
+
+     public Single<List<MealPlanEntity>> getAllMealPlans() {
         return getUserId().flatMap(userId -> Single.create(emitter -> {
             db.collection("users")
                     .document(userId)
@@ -91,16 +103,7 @@ public class FirebaseRemoteDataSource {
                     .addOnFailureListener(emitter::onError);
         }));
     }
-
-    public Completable removeFromWeeklyPlan(MealPlanEntity mealPlan) {
-        return getUserId().flatMapCompletable(userId -> Completable.create(emitter -> {
-            db.collection("users")
-                    .document(userId)
-                    .collection("weekly_plan")
-                    .document(mealPlan.getMealId())
-                    .delete()
-                    .addOnSuccessListener(unused -> emitter.onComplete())
-                    .addOnFailureListener(emitter::onError);
-        }));
+     private String createPlanDocId(MealPlanEntity plan) {
+        return plan.getMealId() + "_" + plan.getPlannedDate();
     }
 }

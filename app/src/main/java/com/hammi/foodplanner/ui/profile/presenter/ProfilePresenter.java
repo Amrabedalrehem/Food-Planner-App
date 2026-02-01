@@ -24,6 +24,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }
     }
 
+
+
     @Override
     public void logout() {
         if (view == null) return;

@@ -51,8 +51,8 @@ public class DetailsRepository {
         return favoritesRepository.isFavorite(mealId);
     }
 
-    public Completable addMealToPlan(Meal meal) {
+    public Completable addMealToPlan(Meal meal, long dateTimestamp) {
         MealEntity entity = MealMapper.toEntity(meal);
-        return mealPlanRepository.addMealToPlan(entity, System.currentTimeMillis());
+        return mealPlanRepository.addMealToPlan(entity, dateTimestamp);
     }
 }

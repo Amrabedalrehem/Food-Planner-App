@@ -83,5 +83,7 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0'
+
 
 }

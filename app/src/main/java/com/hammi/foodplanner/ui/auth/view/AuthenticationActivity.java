@@ -125,7 +125,9 @@ public class AuthenticationActivity extends AppCompatActivity implements AuthCon
         if (lottieLoading != null && loadingOverlay != null) {
             loadingOverlay.setVisibility(View.VISIBLE);
             lottieLoading.setVisibility(View.VISIBLE);
+            lottieLoading.setSpeed(2f);
             lottieLoading.playAnimation();
+            new android.os.Handler().postDelayed(this::hideLoading, 1500);
         }
     }
 

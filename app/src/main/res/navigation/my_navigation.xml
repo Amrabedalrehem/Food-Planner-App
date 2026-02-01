@@ -6,7 +6,7 @@
     app:startDestination="@id/home_Ffragment">
     <fragment
         android:id="@+id/home_Ffragment"
-        android:name="com.hammi.foodplanner.ui.view.homeFragment"
+        android:name="com.hammi.foodplanner.ui.home.view.homeFragment"
         android:label="fragment_home__ffragment"
         tools:layout="@layout/fragment_home__ffragment" >
         <action
@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/allcategories"
-        android:name="com.hammi.foodplanner.ui.view.categorries.allcategories"
+        android:name="com.hammi.foodplanner.ui.home.view.categorries.allcategories"
         android:label="fragment_allcategories"
         tools:layout="@layout/fragment_allcategories" >
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/countriesFragment"
-        android:name="com.hammi.foodplanner.ui.view.Countries.countriesFragment"
+        android:name="com.hammi.foodplanner.ui.home.view.Countries.countriesFragment"
         android:label="fragment_countries"
         tools:layout="@layout/fragment_countries" >
         <action
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/integredients"
-        android:name="com.hammi.foodplanner.ui.view.Ingredients.integredients"
+        android:name="com.hammi.foodplanner.ui.home.view.Ingredients.integredients"
         android:label="fragment_integredients"
         tools:layout="@layout/fragment_integredients" >
         <action
@@ -95,7 +95,7 @@
     </fragment>
     <fragment
         android:id="@+id/detialsFragment"
-        android:name="com.hammi.foodplanner.ui.view.detials.detialsFragment"
+        android:name="com.hammi.foodplanner.ui.home.view.detials.detialsFragment"
         android:label="fragment_detials"
         tools:layout="@layout/fragment_detials" >
         <argument

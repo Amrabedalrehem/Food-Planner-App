@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".ui.view.categorries.allcategories">
+    tools:context=".ui.home.view.categorries.allcategories">
 
     <LinearLayout
         android:id="@+id/headerLayout"

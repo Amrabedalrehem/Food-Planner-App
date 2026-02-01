@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true">
-        <shape android:shape="rectangle">
-            <corners android:radius="20dp" />
-            <solid android:color="#FF1744" />
-            <size android:width="22dp" android:height="6dp" /> </shape>
+        <layer-list>
+            <item android:width="20dp" android:height="6dp" android:gravity="center">
+                <shape android:shape="rectangle">
+                    <corners android:radius="10dp" />
+                    <solid android:color="#FF1744" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 
     <item android:state_selected="false">
-        <shape android:shape="oval">
-            <solid android:color="#D3D3D3" />
-            <size android:width="6dp" android:height="6dp" /> </shape>
+        <layer-list>
+            <item android:width="6dp" android:height="6dp" android:gravity="center">
+                <shape android:shape="oval">
+                    <solid android:color="#D1D1D1" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 </selector>

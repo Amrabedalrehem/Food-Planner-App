@@ -28,7 +28,6 @@ public class SignInFragment extends Fragment  {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         if (context instanceof AuthContract.View) {
             authView = (AuthContract.View) context;
             presenter = ((AuthenticationActivity) context).getPresenter();
